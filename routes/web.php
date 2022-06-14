@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +15,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.dashboard');
-});
+Route::get('/dashboard', function () {
+    return view('pages.admin.dashboard.index');
+})->name('dashboard');
 
-Route::get('/home', function () {
-    return view('pages.index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('coba');
+// Route::get('/logout', function () {
+//     return view('pages.index');
+// })->name('home');
 
 Route::get('/produk', function () {
     return view('pages.products.index');
 })->name('produk');
+
+
+Route::get('/barang', function () {
+    return view('pages.admin.barang.index');
+})->name('barang');
+
+Route::get('/tambah', function () {
+    return view('pages.admin.barang.tambah');
+})->name('tambah');
+
+Route::resource('barang', BarangController::class);
+
+Route::get('/register', [RegiterController::class]);
+Route::post('/register', [RegiterController::class, 'store']);
+
+// Auth::routes();

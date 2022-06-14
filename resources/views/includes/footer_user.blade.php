@@ -1,10 +1,10 @@
       <!-- footer start -->
-      <footer class="footer_section">
+      <footer class="footer_section" id="contact">
 
           <div class="container">
               <div class="row">
                   <div class="col-md-4">
-                      <div class=" full">
+                      <div class="full mt-3">
                           <div class="logo_footer">
                               <a href="#"><img width="120" src="{{ asset('admin') }}/img/nobleseed.png" alt="#" /></a>
                           </div>
@@ -50,7 +50,7 @@
                           <div class="col-md-7">
                               <div class="row">
                                   <div class="col-md-6">
-                                      <div class="widget_menu">
+                                      <div class="widget_menu mt-3">
                                           <h3>Menu</h3>
                                           <ul>
 
@@ -61,17 +61,15 @@
                                               @else
                                                   <li><a style="color:white" href="/home#about">About</a></li>
                                               @endif
-                                              <li><a style="color:white" href="#">Contact</a></li>
-
                                           </ul>
                                       </div>
                                   </div>
                                   <div class="col-md-6">
-                                      <div class="widget_menu">
+                                      <div class="widget_menu mt-3">
                                           <h3>Account</h3>
                                           <ul>
-                                              <li><a style="color:white" href="#">Login</a></li>
-                                              <li><a style="color:white" href="#">Register</a></li>
+                                              <li><a style="color:white" href="/login">Login</a></li>
+                                              <li><a style="color:white" href="/register">Register</a></li>
                                           </ul>
                                       </div>
                                   </div>
