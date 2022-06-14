@@ -35,7 +35,7 @@
 
                   <li class="nav-item">
                       <a href="#" class="nav-link">
-                          <i class="nav-icon fa fa-money"></i>
+                          <i class="nav-icon fa fa-server"></i>
                           <p>
                               Transaksi
                           </p>

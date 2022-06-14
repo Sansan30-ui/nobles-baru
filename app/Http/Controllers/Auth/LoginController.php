@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -38,15 +39,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    public function logout(Request $request)
+    public function login(Request $request)
     {
-        $this->guard()->logout();
-
-        $request->session()->flush();
-
-        $request->session()->regenerate();
-
-        return redirect('/login')
-            ->withSuccess('Terimakasih, selamat datang kembali!');
+        if (Auth::attempt($request->only('email', 'password'))) {
+            if (Auth::user()->role == 'admin') {
+                return redirect('/dashboard');
+            } else {
+                return redirect('/');
+            }
+        }
+        return redirect()->route('login')->withInput()->with('status', 'Username atau Password salah!');
     }
 }

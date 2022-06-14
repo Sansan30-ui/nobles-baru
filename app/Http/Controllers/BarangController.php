@@ -45,8 +45,10 @@ class BarangController extends Controller
         $model = new Barang;
         $model->nama = $request->nama;
         $model->harga = $request->harga;
-        $model->stok = $request->stok;
-        $model->ukuran = $request->ukuran;
+        $model->s = $request->s;
+        $model->m = $request->m;
+        $model->l = $request->l;
+        $model->xl = $request->xl;
         $model->jenis = $request->jenis;
         $model->deskripsi = $request->deskripsi;
         $model->gambar = $request->file('gambar');
@@ -98,8 +100,10 @@ class BarangController extends Controller
             $model = Barang::find($id);
             $model->nama = $request->nama;
             $model->harga = $request->harga;
-            $model->stok = $request->stok;
-            $model->ukuran = $request->ukuran;
+            $model->s = $request->s;
+            $model->m = $request->m;
+            $model->l = $request->l;
+            $model->xl = $request->xl;
             $model->jenis = $request->jenis;
             $model->deskripsi = $request->deskripsi;
             $model->save();

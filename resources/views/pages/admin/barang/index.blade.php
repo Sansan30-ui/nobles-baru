@@ -9,7 +9,6 @@
                 <th>Nama</th>
                 <th>Harga</th>
                 <th>Stok</th>
-                <th>Ukuran</th>
                 <th>Jenis</th>
                 <th>Deskripsi</th>
                 <th>Gambar</th>
@@ -19,11 +18,10 @@
                 <tr>
                     <td>{{ $value->nama }}</td>
                     <td>Rp. {{ number_format($value->harga) }}</td>
-                    <td>{{ $value->stok }}</td>
-                    <td>{{ $value->ukuran }}</td>
+                    <td> {{ $total_stok = $value->s + $value->m + $value->l + $value->xl }}</td>
                     <td>{{ $value->jenis }}</td>
                     <td>{{ $value->deskripsi }}</td>
-                    <td><img src="{{ url('/images', $value->gambar) }}" width="300px" alt="Gambar Produk"></td>
+                    <td><img src="{{ url('/images', $value->gambar) }}" width="80px" alt="Gambar Produk"></td>
                     <td><a class="btn btn-info" href="{{ url('barang/' . $value->id . '/edit') }}">UPDATED</a></td>
                     <td>
                         <form action="{{ url('barang/' . $value->id) }}" method="POST">

@@ -17,12 +17,13 @@ class CreateTableTbBarang extends Migration
             $table->id();
             $table->string('nama');
             $table->integer('harga');
-            $table->integer('stok');
-            $table->string('ukuran');
+            $table->integer('s');
+            $table->integer('m');
+            $table->integer('l');
+            $table->integer('xl');
             $table->string('jenis');
             $table->text('deskripsi');
             $table->timestamps();
-
         });
     }
 

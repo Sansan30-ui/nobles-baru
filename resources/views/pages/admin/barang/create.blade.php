@@ -23,12 +23,21 @@
                     </div>
                     <div class="form-group">
                         <label>Stok</label>
-                        <input type="text" class="form-control" name="stok" placeholder="Masukan Stok Barang">
+                        <input type="text" class="form-control" name="s" placeholder="Masukan Stok Barang">
                     </div>
                     <div class="form-group">
-                        <label>Ukuran</label>
-                        <input type="text" class="form-control" name="ukuran" placeholder="Masukan Ukuran barang">
+                        <label>Stok</label>
+                        <input type="text" class="form-control" name="m" placeholder="Masukan Stok Barang">
                     </div>
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <input type="text" class="form-control" name="l" placeholder="Masukan Stok Barang">
+                    </div>
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <input type="text" class="form-control" name="xl" placeholder="Masukan Stok Barang">
+                    </div>
+
                     <div class="form-group">
                         <label>Jenis</label>
                         <input type="text" class="form-control" name="jenis" placeholder="Masukan Jenis barang">

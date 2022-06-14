@@ -86,7 +86,7 @@
                                     <a href="" class="option1">
                                         Keranjang
                                     </a>
-                                    <a href="" class="option2">
+                                    <a href="{{ url('detail/' . $item->id) }}" class="option2">
                                         Beli Sekarang
                                     </a>
                                 </div>
