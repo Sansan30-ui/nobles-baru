@@ -77,6 +77,12 @@
                     New <span>Products</span>
                 </h2>
             </div>
+            <nav class="d-flex justify-content-end">
+                <form class="nav-link form-inline">
+                    <input class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="btn-search">Search</button>
+                </form>
+            </nav>
             <div class="row">
                 @foreach ($products as $item)
                     <div class="col-sm-6 col-md-4 col-lg-4">

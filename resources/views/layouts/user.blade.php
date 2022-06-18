@@ -61,6 +61,17 @@
             color: #002C3E !important;
         }
 
+        #btn-search:hover {
+            background-color: #ffffff !important;
+            color: #002C3E !important;
+            border-color: #002C3E;
+        }
+
+        #btn-search {
+            background-color: #002C3E !important;
+            color: #ffffff !important;
+            border-color: #002C3E;
+        }
     </style>
 </head>
 
