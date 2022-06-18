@@ -22,19 +22,19 @@
                         <input type="text" class="form-control" name="harga" placeholder="Masukan Harga Barang">
                     </div>
                     <div class="form-group">
-                        <label>Stok</label>
+                        <label>S</label>
                         <input type="text" class="form-control" name="s" placeholder="Masukan Stok Barang">
                     </div>
                     <div class="form-group">
-                        <label>Stok</label>
+                        <label>M</label>
                         <input type="text" class="form-control" name="m" placeholder="Masukan Stok Barang">
                     </div>
                     <div class="form-group">
-                        <label>Stok</label>
+                        <label>L</label>
                         <input type="text" class="form-control" name="l" placeholder="Masukan Stok Barang">
                     </div>
                     <div class="form-group">
-                        <label>Stok</label>
+                        <label>XL</label>
                         <input type="text" class="form-control" name="xl" placeholder="Masukan Stok Barang">
                     </div>
 

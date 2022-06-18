@@ -8,7 +8,7 @@
                   <img src="/admin/img/nobleseed.png" alt="User Image">
               </div>
               <div class="info">
-                  <a href="#" class="d-block">Admin Nobleseed</a>
+                  <a>Admin Nobleseed</a>
               </div>
           </div>
           <!-- Sidebar Menu -->

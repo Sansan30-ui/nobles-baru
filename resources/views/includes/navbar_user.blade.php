@@ -45,7 +45,7 @@
                                     <a class="nav-link" href="#" style="display: flex; justify-content:center;">
                                         <i class="fa fa-shopping-cart fa-lg mr-2" aria-hidden="true"
                                             style="color: white"></i>
-                                        <p class="">Keranjang</p>
+                                        <p>Keranjang</p>
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown show">
@@ -55,7 +55,7 @@
                                             <span class="caret">{{ auth()->user()->name }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/" class="dropdown-item">Dashboard</a></li>
+                                        <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
                                         <form action="/logout" method="POST">
                                             @csrf
                                             <li><button type="submit" class="dropdown-item">Logout</a></li>

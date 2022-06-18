@@ -15,11 +15,15 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="/login" role="button">
-                <i class="fas fa-user"></i>
+                <i class="nav-link fas fa-user"></i>
             </a>
-        </li>
+        </li> --}}
+        <form action="/logout" method="POST">
+            @csrf
+            <li><button type="submit" class="dropdown-item">Logout</a></li>
+        </form>
 
         <!-- Notifications Dropdown Menu -->
         {{-- <li class="nav-item dropdown">

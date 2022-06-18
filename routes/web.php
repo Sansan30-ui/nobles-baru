@@ -3,8 +3,10 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +28,13 @@ Route::get('/', [HomeController::class, 'index'])->name('coba');
 //     return view('pages.index');
 // })->name('home');
 
-Route::get('/produk', function () {
-    return view('pages.products.index');
-})->name('produk');
+// Route::get('/produk', function () {
+//     return view('pages.products.index');
+// })->name('produk');
+
+Route::get('/produk', [ProdukController::class, 'index']);
+
+
 
 
 Route::get('/barang', function () {
