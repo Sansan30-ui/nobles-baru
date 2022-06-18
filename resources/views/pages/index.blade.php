@@ -104,17 +104,8 @@
                                 <h5>
                                     {{ $item->nama }}
                                 </h5>
-                                <h5>
-                                    {{ $item->ukuran }}
-                                </h5>
-                                <h5>
-                                    {{ $item->jenis }}
-                                </h5>
-                                <h5>
-                                    {{ $item->deskirpsi }}
-                                </h5>
                                 <h6>
-                                    {{ $item->harga }}
+                                    {{ 'RP ' . $item->harga }}
                                 </h6>
                             </div>
                         </div>

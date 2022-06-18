@@ -302,10 +302,14 @@
                                 {{ $total_stok = $item->s + $item->m + $item->l + $item->xl }}
                             <p class="vote"><strong>stok</strong> {{ $total_stok }}<strong></p>
                             <h5 class="sizes">sizes:
-                                <span class="size" data-toggle="tooltip" title="small">s</span>
-                                <span class="size" data-toggle="tooltip" title="medium">m</span>
-                                <span class="size" data-toggle="tooltip" title="large">l</span>
-                                <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+                                <span class="size" data-toggle="tooltip" title="small">S =
+                                    {{ $item->s }}</span>
+                                <span class="size" data-toggle="tooltip" title="medium">M =
+                                    {{ $item->m }}</span>
+                                <span class="size" data-toggle="tooltip" title="large">L =
+                                    {{ $item->l }}</span>
+                                <span class="size" data-toggle="tooltip" title="xtra large">XL =
+                                    {{ $item->xl }}</span>
                             </h5>
                             <h5 class="colors">colors:
                                 <span class="color orange not-available" data-toggle="tooltip"
