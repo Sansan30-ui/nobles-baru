@@ -24,7 +24,6 @@
         </div>
         <!-- /.content -->
         <!-- /.content-wrapper -->
-        @include('includes.footer')
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

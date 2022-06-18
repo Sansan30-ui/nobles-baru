@@ -22,7 +22,7 @@
                     <td>{{ $value->jenis }}</td>
                     <td>{{ $value->deskripsi }}</td>
                     <td><img src="{{ url('/images', $value->gambar) }}" width="80px" alt="Gambar Produk"></td>
-                    <td><a class="btn btn-info" href="{{ url('barang/' . $value->id . '/edit') }}">UPDATED</a></td>
+                    <td><a class="btn btn-info" href="{{ url('barang/' . $value->id . '/edit') }}">EDIT</a></td>
                     <td>
                         <form action="{{ url('barang/' . $value->id) }}" method="POST">
                             @csrf

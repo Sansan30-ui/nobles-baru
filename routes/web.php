@@ -45,6 +45,10 @@ Route::get('/tambah', function () {
     return view('pages.admin.barang.tambah');
 })->name('tambah');
 
+Route::get('/akun', function () {
+    return view('pages.admin.account.akun');
+})->name('akun');
+
 Route::resource('barang', BarangController::class);
 
 Route::get('/register', [RegisterController::class]);
