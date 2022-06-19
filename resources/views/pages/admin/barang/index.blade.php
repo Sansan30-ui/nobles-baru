@@ -8,7 +8,7 @@
             <tr>
                 <th>Nama</th>
                 <th>Harga</th>
-                <th>Stok</th>
+                <th>Total Stok</th>
                 <th>Jenis</th>
                 <th>Deskripsi</th>
                 <th>Gambar</th>
@@ -21,7 +21,7 @@
                     <td> {{ $total_stok = $value->s + $value->m + $value->l + $value->xl }}</td>
                     <td>{{ $value->jenis }}</td>
                     <td>{{ $value->deskripsi }}</td>
-                    <td><img src="{{ url('/images', $value->gambar) }}" width="80px" alt="Gambar Produk"></td>
+                    <td><img src="{{ url('/images', $value->gambar) }}" width="50px" alt="Gambar Produk"></td>
                     <td><a class="btn btn-info" href="{{ url('barang/' . $value->id . '/edit') }}">EDIT</a></td>
                     <td>
                         <form action="{{ url('barang/' . $value->id) }}" method="POST">

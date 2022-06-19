@@ -77,12 +77,23 @@
                     New <span>Products</span>
                 </h2>
             </div>
-            <nav class="d-flex justify-content-end">
-                <form class="nav-link form-inline">
-                    <input class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="btn-search">Search</button>
-                </form>
-            </nav>
+            {{-- Searching --}}
+
+            <div class="row justify-content-end">
+                <div class="col-md-4">
+                    <form action="/home">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Cari.." name="search"
+                                value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                                    id="btn-search">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="row">
                 @foreach ($products as $item)
                     <div class="col-sm-6 col-md-4 col-lg-4">
@@ -105,7 +116,7 @@
                                     {{ $item->nama }}
                                 </h5>
                                 <h6>
-                                    {{ 'RP ' . $item->harga }}
+                                    Rp. {{ number_format($item->harga) }}
                                 </h6>
                             </div>
                         </div>
