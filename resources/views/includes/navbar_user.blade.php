@@ -3,10 +3,11 @@
     <header class="header_section">
         <div class="container">
             <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" href="index.html"><img width="100"
-                        src="{{ asset('admin') }}/img/nobleseed.png" alt="#" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="index.html"><img width="100" src="{{ asset('admin') }}/img/nobleseed.png"
+                        alt="#" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class=""> </span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -18,8 +19,7 @@
                         <ul class="navbar-nav">
 
                             <li class="nav-item {{ Request::is('produk') ? 'active' : '' }}">
-                                <a class="nav-link" href="/produk">Products<span
-                                        class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/produk">Products<span class="sr-only">(current)</span></a>
                             </li>
                             @if (Request::is('produk'))
                                 <li class="nav-item">
@@ -49,13 +49,19 @@
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown show">
-                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="true"> <span class="nav-label">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                        role="button" aria-haspopup="true" aria-expanded="true"> <span
+                                            class="nav-label">
                                             <i class="fa fa-user fa-lg mr-2"></i>
                                             <span class="caret">{{ auth()->user()->name }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
+                                        {{-- @dump(auth()->user()->role); --}}
+                                        @if (auth()->user()->role == 'admin')
+                                            <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
+                                        @else
+                                            <li><a href="/dashboard" class="dropdown-item">Profil</a></li>
+                                        @endif
                                         <form action="/logout" method="POST">
                                             @csrf
                                             <li><button type="submit" class="dropdown-item">Logout</a></li>
@@ -64,8 +70,7 @@
                                 </li>
                             @else
                                 <li class="nav-item {{ Request::is('login') ? 'active' : '' }}">
-                                    <a class="nav-link" href="/login">login <span
-                                            class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
                                 </li>
                             @endif
 

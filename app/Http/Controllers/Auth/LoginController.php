@@ -41,13 +41,22 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
-            if (Auth::user()->role == 'admin') {
-                return redirect('/dashboard');
-            } else {
-                return redirect('/');
+
+        $kredensil = $request->only('email', 'password');
+
+        if (Auth::attempt($kredensil)) {
+            $user = Auth::user();
+            if ($user->role == 'admin') {
+                return redirect()->to('/dashboard');
+            } elseif ($user->role == 'user') {
+                return redirect()->to('/dashboard');
             }
+            dd('1');
+            return redirect()->to('login');
         }
-        return redirect()->route('login')->withInput()->with('status', 'Username atau Password salah!');
+        dd('2');
+        return redirect('/login');
+        // ->withInput()
+        // ->withErrors(['login_gagal' => 'These credentials do not match our records.']);
     }
 }

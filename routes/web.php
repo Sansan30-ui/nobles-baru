@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,7 @@ Route::get('/produk', [ProdukController::class, 'index']);
 
 
 
+// Route::get('/detail', [DetailController::class, 'index']);
 
 Route::get('/barang', function () {
     return view('pages.admin.barang.index');
@@ -45,9 +47,12 @@ Route::get('/tambah', function () {
     return view('pages.admin.barang.tambah');
 })->name('tambah');
 
-Route::get('/akun', function () {
-    return view('pages.admin.account.akun');
-})->name('akun');
+Route::get('/akun', [UserController::class, 'index']);
+Route::delete('/akun/{id}', [UserController::class, 'destroy']);
+
+Route::get('/transaksi', function () {
+    return view('pages.admin.transaksi.transaksi');
+})->name('transaksi');
 
 Route::resource('barang', BarangController::class);
 
@@ -59,5 +64,22 @@ Route::get('/detail/{id}', [DetailController::class, 'detail']);
 // Auth::routes();
 
 Auth::routes();
+route::auth();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+route::group(['middleware' => ['login_check:admin']], function () {
+
+    Route::get('/dashboard', function () {
+        return view('pages.admin.dashboard.index');
+    })->name('dashboard');
+});
+route::group(['middleware' => ['login_check:user']], function () {
+
+    Route::get('/', [HomeController::class, 'index'])->name('coba');
+});
+// Route::middleware(['admin'])->group(function () {
+
+// });
