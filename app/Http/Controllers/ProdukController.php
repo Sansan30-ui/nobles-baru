@@ -25,6 +25,10 @@ class ProdukController extends Controller
     public function index()
     {
         $product = Barang::latest()->get();
+        foreach ($product as $br => $value) {
+            $value->gambar = unserialize($value->gambar);
+            // dd($value->gambar);
+        }
         return view('pages.products.index', ['product' => $product]);
     }
 }

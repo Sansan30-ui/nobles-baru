@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
+    <style>
+        .images-preview-div img {
+            padding: 10px;
+            max-width: 100px;
+        }
+    </style>
     <div class="container-fluid mt-3">
         <form method="POST" action="{{ url('barang') }}" enctype="multipart/form-data">
             @csrf
@@ -46,33 +52,88 @@
                         <label>Deskripsi</label>
                         <input type="text" class="form-control" name="deskripsi" placeholder="Masukan Deskripsi barang">
                     </div>
-                    {{-- <div class="form-group"> --}}
-                    {{-- <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="gambar" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Choose
-                                    file</label>
-                            </div> --}}
                     <div class="mb-3">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="gambar" id="exampleInputFile">
-                            <label for="gambar" class="form-label">Input Gambar</label>
-                            <input class="form-control" type="file" id="gambar" name="gambar">
+                        <label for="gambar">Gambar</label>
+                        <div class="input-group hdtuto control-group lst increment mb-2">
+                            <input type="file" name="gambar[]" class="myfrm form-control">
+                            <div class="input-group-btn">
+                                <button class="btn btn-success" type="button"><i
+                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                            </div>
+                        </div>
+                        <div class="input-group hdtuto control-group lst increment mb-2">
+                            <input type="file" name="gambar[]" class="myfrm form-control">
+                            <div class="input-group-btn">
+                                <button class="btn btn-success" type="button"><i
+                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                            </div>
+                        </div>
+                        <div class="input-group hdtuto control-group lst increment mb-2">
+                            <input type="file" name="gambar[]" class="myfrm form-control">
+                            <div class="input-group-btn">
+                                <button class="btn btn-success" type="button"><i
+                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                            </div>
+                        </div>
+                        @error('gambar')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mt-1 text-center">
+                            <div class="gambar-preview-div"> </div>
                         </div>
                     </div>
-                    {{-- </div> --}}
-                    {{-- </div> --}}
                 </div>
-
-
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+                {{-- </div> --}}
+                {{-- </div> --}}
             </div>
-            <!-- /.col -->
 
-        </form>
+
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
     </div>
+    <!-- /.col -->
+
+    </form>
+    </div>
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#gambar');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(gambar.files[0]);
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            // Multiple gambar preview with JavaScript
+            var previewgambar = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
+                                imgPreviewPlaceholder);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#gambar').on('change', function() {
+                previewgambar(this, 'div.gambar-preview-div');
+            });
+        });
+    </script>
 @endsection

@@ -11,4 +11,9 @@ class Barang extends Model
     protected $table = "tb_barang";
 
     protected $guarded = ["id"];
+
+    // public function getGambarAttribute($value)
+    // {
+
+    // }
 }

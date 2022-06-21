@@ -32,6 +32,10 @@ class HomeController extends Controller
         // dd(request('search'));
         $products = Barang::latest()->get();
         // dd($products);
+        foreach ($products as $br => $value) {
+            $value->gambar = unserialize($value->gambar);
+            // dd($value->gambar);
+        }
         return view('pages.index', ['products' => $products]);
     }
 

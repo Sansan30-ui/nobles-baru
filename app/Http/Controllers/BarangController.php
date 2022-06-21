@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Barang;
+use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
@@ -15,6 +16,10 @@ class BarangController extends Controller
     public function index()
     {
         $barangs = Barang::all();
+        foreach ($barangs as $br => $value) {
+            $value->gambar = unserialize($value->gambar);
+            // dd($value->gambar);
+        }
 
         return view('pages.admin.barang.index', compact(
             'barangs'
@@ -52,12 +57,17 @@ class BarangController extends Controller
         $model->jenis = $request->jenis;
         $model->deskripsi = $request->deskripsi;
         $model->gambar = $request->file('gambar');
+        $files = [];
+        if ($request->hasfile('gambar')) {
+            foreach ($request->file('gambar') as $file) {
+                $name = time() . rand(1, 100) . '.' . $file->extension();
+                $file->move(base_path() . '/public/images', $name);
+                $files[] = $name;
+            }
+        }
 
-        $gambar = $model->gambar->move(base_path() . '/public/images', time() . $model->gambar->getClientOriginalName());
-        $model->gambar = $gambar->getFilename();
-
-
-
+        $model->gambar = serialize($files);
+        // dd($model);
         $model->save();
 
         return redirect('barang');
@@ -83,6 +93,8 @@ class BarangController extends Controller
     public function edit($id)
     {
         $model = Barang::find($id);
+        $model['gambar'] = unserialize($model->gambar);
+        // dd($model->gambar);
         return view('pages.admin.barang.edit', compact(
             'model'
         ));
@@ -106,6 +118,25 @@ class BarangController extends Controller
             $model->xl = $request->xl;
             $model->jenis = $request->jenis;
             $model->deskripsi = $request->deskripsi;
+            $model->gambar = $request->file('gambar');
+            // dd($request->gambar());
+            $files = [];
+            if ($request->hasfile('gambar')) {
+                foreach ($request->file('gambar') as $file) {
+                    $name = time() . rand(1, 100) . '.' . $file->extension();
+                    $file->move(base_path() . '/public/images', $name);
+                    $files[] = $name;
+                }
+                // dd($request->gambarLama);
+                foreach ($request->gambarLama as $fileHapus) {
+                    Storage::delete('/public/images/' . $fileHapus);
+                }
+            } else {
+                $files[] = $model->gambar;
+            }
+
+            $model->gambar = serialize($files);
+            // dd($request->all());
             $model->save();
 
             return redirect('barang');

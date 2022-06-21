@@ -242,92 +242,106 @@
 
         /*# sourceMappingURL=style.css.map */
     </style>
+    <style>
+        .tab-content img {
+            width: 100%;
+            -webkit-animation-name: opacity;
+            animation-name: opacity;
+            -webkit-animation-duration: .3s;
+            animation-duration: .3s;
+            max-height: 315px;
+        }
 
+        .preview-thumbnail.nav-tabs li img {
+            max-width: 100%;
+            display: block;
+            max-height: 90px;
+        }
+    </style>
 </head>
 
 <body>
     @foreach ($products as $item)
-        <div class="container">
-            <div class="card">
-                <div class="container-fliud">
-                    <div class="wrapper row">
-                        <div class="preview col-md-6">
+    @endforeach
+    {{-- {{ dd($item->gambar[0]) }} --}}
+    <div class="container">
+        <div class="card">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
 
-                            <div class="preview-pic tab-content">
-                                <div class="tab-pane active" id="pic-1"> <img
-                                        src=" {{ asset('images/' . $item->gambar) }}" alt=""></div>
-                                <div class="tab-pane" id="pic-2"> <img
-                                        src=" {{ asset('images/' . $item->gambar) }}" alt=""></div>
-                                <div class="tab-pane" id="pic-3"> <img
-                                        src=" {{ asset('images/' . $item->gambar) }}" alt=""></div>
-                                <div class="tab-pane" id="pic-4"> <img
-                                        src=" {{ asset('images/' . $item->gambar) }}" alt=""></div>
-                                <div class="tab-pane" id="pic-5"> <img
-                                        src=" {{ asset('images/' . $item->gambar) }}" alt=""></div>
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-1">
+                                <img src=" {{ asset('images/' . $item->gambar[0]) }}" alt="">
                             </div>
-                            <ul class="preview-thumbnail nav nav-tabs">
-                                <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                            src=" {{ asset('images/' . $item->gambar) }}" /></a></li>
-                                <li><a data-target="#pic-2" data-toggle="tab"><img
-                                            src=" {{ asset('images/' . $item->gambar) }}" /></a></li>
-                                <li><a data-target="#pic-3" data-toggle="tab"><img
-                                            src=" {{ asset('images/' . $item->gambar) }}" /></a></li>
-                                <li><a data-target="#pic-4" data-toggle="tab"><img
-                                            src=" {{ asset('images/' . $item->gambar) }}" /></a></li>
-                                <li><a data-target="#pic-5" data-toggle="tab"><img
-                                            src=" {{ asset('images/' . $item->gambar) }}" /></a></li>
-                            </ul>
-
+                            <div class="tab-pane" id="pic-2">
+                                <img src=" {{ asset('images/' . $item->gambar[1]) }}" alt="">
+                            </div>
+                            <div class="tab-pane" id="pic-3">
+                                <img src=" {{ asset('images/' . $item->gambar[2]) }}" alt="">
+                            </div>
                         </div>
-                        <div class="details col-md-6">
-                            <h3 class="product-title">{{ $item->nama }}</h3>
-                            <div class="rating">
-                                <div class="stars">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                <span class="review-no">41 reviews</span>
-                            </div>
-                            </p>
-                            <h4 class="price">Kategori:
-                                <span>{{ $item->jenis }}</span>
-                            </h4>
-                            <h4 class="price">Harga:
-                                <span>{{ 'Rp ' . number_format($item->harga, 0, ',', '.') }}</span>
-                            </h4>
-                            <p class="product-description">{{ $item->deskripsi }}
-                                {{ $total_stok = $item->s + $item->m + $item->l + $item->xl }}
-                            <p class="vote"><strong>stok</strong> {{ $total_stok }}<strong></p>
-                            <h5 class="sizes">sizes:
-                                <span class="size" data-toggle="tooltip" title="small">S =
-                                    {{ $item->s }}</span>
-                                <span class="size" data-toggle="tooltip" title="medium">M =
-                                    {{ $item->m }}</span>
-                                <span class="size" data-toggle="tooltip" title="large">L =
-                                    {{ $item->l }}</span>
-                                <span class="size" data-toggle="tooltip" title="xtra large">XL =
-                                    {{ $item->xl }}</span>
-                            </h5>
-                            <h5 class="colors">colors:
-                                <span class="color orange not-available" data-toggle="tooltip"
-                                    title="Not In store"></span>
-                                <span class="color green"></span>
-                                <span class="color blue"></span>
-                            </h5>
-                            <div class="action">
-                                <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                                <button class="like btn btn-default" type="button"><span
-                                        class="fa fa-shopping-cart"></span></button>
-                            </div>
+                        <ul class="preview-thumbnail nav nav-tabs">
+                            <li class="active">
+                                <a data-target="#pic-1" data-toggle="tab">
+                                    <img src=" {{ asset('images/' . $item->gambar[0]) }}" />
+                                </a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-2" data-toggle="tab">
+                                    <img src=" {{ asset('images/' . $item->gambar[1]) }}" />
+                                </a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-3" data-toggle="tab">
+                                    <img src=" {{ asset('images/' . $item->gambar[2]) }}" />
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="details col-md-6">
+                        <h3 class="product-title">{{ $item->nama }}</h3>
+                        </p>
+                        <h4 class="price">Kategori:
+                            <span>{{ $item->jenis }}</span>
+                        </h4>
+                        <h4 class="price">Harga:
+                            <span>{{ 'Rp ' . number_format($item->harga, 0, ',', '.') }}</span>
+                        </h4>
+                        <h4><strong>Deskripsi</strong>
+                            <p class="product-description">{{ $item->deskripsi }}</p>
+                        </h4>
+                        @php
+                            $total_stok = $item->s + $item->m + $item->l + $item->xl;
+                        @endphp
+                        <p class="vote"><strong>STOK</strong> {{ $total_stok }}<strong></p>
+                        <h5 class="sizes">sizes:
+                            <span class="size" data-toggle="tooltip" title="small">S =
+                                {{ $item->s }}</span>
+                            <span class="size" data-toggle="tooltip" title="medium">M =
+                                {{ $item->m }}</span>
+                            <span class="size" data-toggle="tooltip" title="large">L =
+                                {{ $item->l }}</span>
+                            <span class="size" data-toggle="tooltip" title="xtra large">XL =
+                                {{ $item->xl }}</span>
+                        </h5>
+                        <h5 class="colors">colors:
+                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                            <span class="color green"></span>
+                            <span class="color blue"></span>
+                        </h5>
+                        <div class="action">
+                            <button class="add-to-cart btn btn-default" type="button">Beli Sekarang!</button>
+                            <button class="like btn btn-default" type="button"><span
+                                    class="fa fa-shopping-cart"></span></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
+
 </body>
 
 </html>

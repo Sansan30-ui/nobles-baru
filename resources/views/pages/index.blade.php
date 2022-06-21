@@ -109,7 +109,8 @@
                                 </div>
                             </div>
                             <div class="img-box">
-                                <img src=" {{ asset('images/' . $item->gambar) }}" alt="">
+                                {{-- @dump($item->gambar[0]); --}}
+                                <img src=" {{ asset('images/' . $item->gambar[0]) }}" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
