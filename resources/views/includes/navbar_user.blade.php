@@ -41,11 +41,11 @@
                             @endif
 
                             @if (auth()->user())
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" style="display: flex; justify-content:center;">
+                                <li class="">
+                                    <a class="nav-link" href="/cart/{{ auth()->user()->id }}"
+                                        style="display: flex; justify-content:center;">
                                         <i class="fa fa-shopping-cart fa-lg mr-2" aria-hidden="true"
                                             style="color: white"></i>
-                                        <p>Keranjang</p>
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown show">
@@ -56,7 +56,6 @@
                                             <span class="caret">{{ auth()->user()->name }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        {{-- @dump(auth()->user()->role); --}}
                                         @if (auth()->user()->role == 'admin')
                                             <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
                                         @else

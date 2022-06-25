@@ -53,4 +53,9 @@ class User extends Authenticatable
             get: fn ($value) => ucfirst($value),
         );
     }
+
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class);
+    }
 }

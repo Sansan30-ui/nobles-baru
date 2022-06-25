@@ -5,7 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,13 +27,6 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/', [HomeController::class, 'index'])->name('coba');
-// Route::get('/logout', function () {
-//     return view('pages.index');
-// })->name('home');
-
-// Route::get('/produk', function () {
-//     return view('pages.products.index');
-// })->name('produk');
 
 Route::get('/produk', [ProdukController::class, 'index']);
 
@@ -50,9 +45,13 @@ Route::get('/tambah', function () {
 Route::get('/akun', [UserController::class, 'index']);
 Route::delete('/akun/{id}', [UserController::class, 'destroy']);
 
-Route::get('/transaksi', function () {
-    return view('pages.admin.transaksi.transaksi');
-})->name('transaksi');
+// Route::get('/transaksi', function () {
+//     return view('pages.admin.transaksi.transaksi');
+// })->name('transaksi');
+
+
+
+Route::get('/payment/{id}', [PaymentController::class, 'payment']);
 
 Route::resource('barang', BarangController::class);
 
@@ -60,6 +59,9 @@ Route::get('/register', [RegisterController::class]);
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/detail/{id}', [DetailController::class, 'detail']);
 
+Route::post('/keranjang', [CartController::class, 'store']);
+
+Route::get('/cart/{id}', [CartController::class, 'index']);
 
 // Auth::routes();
 

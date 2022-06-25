@@ -100,11 +100,8 @@
                         <div class="box">
                             <div class="option_container">
                                 <div class="options">
-                                    <a href="" class="option1">
-                                        Keranjang
-                                    </a>
                                     <a href="{{ url('detail/' . $item->id) }}" class="option2">
-                                        Beli Sekarang
+                                        Detail
                                     </a>
                                 </div>
                             </div>

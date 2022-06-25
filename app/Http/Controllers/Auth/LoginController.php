@@ -51,10 +51,10 @@ class LoginController extends Controller
             } elseif ($user->role == 'user') {
                 return redirect()->to('/dashboard');
             }
-            dd('1');
+
             return redirect()->to('login');
         }
-        dd('2');
+
         return redirect('/login');
         // ->withInput()
         // ->withErrors(['login_gagal' => 'These credentials do not match our records.']);

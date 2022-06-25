@@ -16,4 +16,8 @@ class Barang extends Model
     // {
 
     // }
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class);
+    }
 }
