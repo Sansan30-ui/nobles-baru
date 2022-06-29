@@ -78,8 +78,8 @@
 <body>
     @include('includes.navbar_user')
     @yield('content')
-    @include('includes.footer_user')
     @include('includes.scripts_user')
+    @include('includes.footer_user')
 </body>
 
 </html>

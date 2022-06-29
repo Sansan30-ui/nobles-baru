@@ -59,7 +59,8 @@
                                         @if (auth()->user()->role == 'admin')
                                             <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
                                         @else
-                                            <li><a href="/dashboard" class="dropdown-item">Profil</a></li>
+                                            <li><a href="/profile" class="dropdown-item">Profil</a></li>
+                                            <li><a href="/pesanan" class="dropdown-item">Pesanan Saya</a></li>
                                         @endif
                                         <form action="/logout" method="POST">
                                             @csrf

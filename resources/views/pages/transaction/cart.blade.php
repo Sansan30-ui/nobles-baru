@@ -64,7 +64,7 @@
                                     <div class="p-5">
                                         <div class="d-flex justify-content-between align-items-center mb-5">
                                             <h1 class="fw-bold mb-0 text-black">Keranjang Belanja</h1>
-                                            <h6 class="mb-0 text-muted">3 items</h6>
+                                            {{-- <h6 class="mb-0 text-muted">3 items</h6> --}}
                                         </div>
                                         @if (empty($keranjang))
                                             <div class="text-center">
@@ -81,28 +81,29 @@
                                                     </div>
                                                     <div class="col-md-3 col-lg-3 col-xl-3">
                                                         <h6 class="text-muted">{{ $item->barang->jenis }}</h6>
+                                                        <h6 class="text-muted">ukuran : {{ $item->ukuran }}</h6>
                                                         <h6 class="text-black mb-0">{{ $item->barang->nama }}</h6>
                                                     </div>
-                                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                        <button class="btn btn-link px-2"
+                                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex text-center">
+                                                        {{-- <button class="btn btn-link px-2"
                                                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                             <i class="fas fa-minus"></i>
-                                                        </button>
+                                                        </button> --}}
 
-                                                        <input id="form1" min="1" name="quantity"
-                                                            value="{{ $item->jumlah }}" type="number"
-                                                            class="form-control form-control-sm" />
+                                                        <label id="form1" min="1" name="quantity"
+                                                            type="number" class="">{{ $item->jumlah }}</label>
 
-                                                        <button class="btn btn-link px-2"
+                                                        {{-- <button class="btn btn-link px-2"
                                                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                             <i class="fas fa-plus"></i>
-                                                        </button>
+                                                        </button> --}}
                                                     </div>
                                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                         <h6 class="mb-0">
                                                             {{ 'Rp ' . number_format($item->barang->harga, 0, ',', '.') }}
                                                         </h6>
                                                     </div>
+
                                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                                         <a href="#!" class="text-muted"><i
                                                                 class="fas fa-times"></i></a>
@@ -112,8 +113,9 @@
 
 
                                             <div class="pt-5">
-                                                <h6 class="mb-0"><a href="#!" class="text-body"><i
-                                                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
+                                                <h6 class="mb-0"><a href="/produk" class="text-body"><i
+                                                            class="fas fa-long-arrow-alt-left me-2"></i>Kembali Belanja
+                                                    </a>
                                                 </h6>
                                             </div>
                                         @endif
@@ -121,32 +123,45 @@
                                 </div>
 
                                 <div class="col-lg-4 bg-grey">
-                                    <div class="p-5">
-                                        <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                                        <hr class="my-4">
-                                        @foreach ($keranjang as $item)
-                                            <div class="d-flex justify-content-between mb-4">
-                                                <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
-                                                <h5>{{ $hargaItem[0] = $item->barang->harga * $item->jumlah }}</h5>
-                                            </div>
-                                        @endforeach
-                                        <hr class="my-4">
+                                    <form action="{{ url('payment/' . auth()->user()->id) }}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="p-5">
+                                            <h3 class="fw-bold mb-5 mt-2 pt-1">Detail Pesanan</h3>
+                                            <hr class="my-4">
+                                            @foreach ($keranjang as $item)
+                                                <input type="hidden" name="barang_id[]" id=""
+                                                    value="{{ $item->barang_id }}">
+                                                <input type="hidden" name="keranjang_id[]" id=""
+                                                    value="{{ $item->id }}">
+                                                {{-- <input type="hidden" name="cart_total" id=""
+                                                    value="{{ $item->jumlah }}"> --}}
+                                                <div class="d-flex justify-content-between mb-4">
+                                                    <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
+                                                    <h5>{{ $hargaItem[0] = $item->barang->harga * $item->jumlah }}
+                                                    </h5>
+                                                </div>
+                                                <input type="hidden" name="{{ $item->ukuran }}[]"
+                                                    value="{{ $item->jumlah }}">
+                                            @endforeach
+                                            <hr class="my-4">
 
-                                        <div class="d-flex justify-content-between mb-5">
-                                            <h5 class="text-uppercase">Total price</h5>
-                                            {{-- @php
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <h5 class="text-uppercase">Total price</h5>
+                                                {{-- @php
                                                 foreach ($hargaItem as $value) {
                                                     $total = $value += $item->barang->harga;
                                                 }
                                             @endphp
                                             <h5>{{ $total }}</h5> --}}
 
+                                            </div>
+
+                                            <button type="submit" class="btn btn-dark btn-block btn-lg"
+                                                data-mdb-ripple-color="dark">Checkout</button>
+
                                         </div>
-
-                                        <button type="button" class="btn btn-dark btn-block btn-lg"
-                                            data-mdb-ripple-color="dark">Checkout</button>
-
-                                    </div>
+                                    </form>
                                 </div>
 
                             </div>

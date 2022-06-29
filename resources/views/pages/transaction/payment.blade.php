@@ -64,34 +64,40 @@
 
 
 <body class="bg-light">
-
+    {{-- {{ dd($jumlah_barang) }} --}}
     <div class="container">
         <main>
             <div class="py-5 text-center">
                 <h2>Checkout</h2>
                 <p><strong>................</strong></p>
             </div>
-            @foreach ($products as $item)
-                <form class="needs-validation" novalidate action="/checkout" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <div class="row g-5">
-                        <div class="col-md-5 col-lg-4 order-md-last">
-                            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-dark">cart</span>
-                                <!-- <span class="badge bg-primary rounded-pill">3</span> -->
-                            </h4>
 
-                            <ul class="list-group mb-3">
-                                <li class="list-group-item d-flex justify-content-between lh-sm">
+            <form class="needs-validation" novalidate action="/checkout" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row g-5">
+                    {{-- {{ dd($keranjang) }} --}}
+                    <div class="col-md-5 col-lg-4 order-md-last">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-dark">cart</span>
+                            <!-- <span class="badge bg-primary rounded-pill">3</span> -->
+                        </h4>
+
+                        <ul class="list-group mb-3">
+                            @foreach ($keranjang as $p)
+                                <li class="list-group-item d-flex justify-content-between lh-sm mb-3">
                                     <div>
-                                        <h6 style="font-size:15px" class="my-1" name="produk">{{ $item->nama }}
+                                        <h6 style="font-size:15px" class="my-1" name="produk">
+                                            {{ $p->barang->nama }}
                                         </h6>
+                                        <h6>{{ $p->barang_id }}</h6>
+                                        <input type="hidden" name="ids[]" value="{{ $p->barang_id }}">
 
-                                        <small class="" name="alamat"></small>
-                                       
+                                        <input type="hidden" type="text"name="ukuran[]" value="{{ $p->ukuran }}">
+
                                     </div>
-                                    <span class=" fw-bold" name="harga">{{ $item->harga }}</span>
+                                    <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
+                                        name="harga[]">
+
 
 
                                 </li>
@@ -99,130 +105,128 @@
 
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span class="fw-bold">Total</span>
-                                    <strong>2000000</strong>
+                                    <strong>.............</strong>
                                 </li>
-                            </ul>
+                            @endforeach
 
+                            <input type="hidden" name="xl" value="{{ $jumlah_barang['XL'] }}">
+                            <input type="hidden" name="l" value="{{ $jumlah_barang['L'] }}">
+                            <input type="hidden" name="m" value="{{ $jumlah_barang['M'] }}">
+                            <input type="hidden" name="s" value="{{ $jumlah_barang['S'] }}">
+                        </ul>
+
+                    </div>
+
+                    <div class="col-md-7 col-lg-8">
+
+                        <div class="col-sm-6">
+                            <input type="hidden" class="form-control @error('id') is-invalid @enderror" id="id"
+                                placeholder="" value="" name="id" required>
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
                         </div>
-            @endforeach
-            <div class="col-md-7 col-lg-8">
-
-                <div class="col-sm-6">
-                    <input type="hidden" class="form-control @error('id') is-invalid @enderror" id="id"
-                        placeholder="" value="" name="id" required>
-                    <div class="invalid-feedback">
-                        Valid first name is required.
-                    </div>
-                </div>
-
-
-                <div class="col-sm-6">
-                    <input type="hidden" class="form-control @error('total') is-invalid @enderror" id="total"
-                        placeholder="" value="" name="total" required>
-                    <div class="invalid-feedback">
-                        Valid first name is required.
-                    </div>
-                </div>
 
 
 
-                <div class="row ">
-                    <div class="col-sm-6">
-                        <label for="firstName" class="form-label">Nama Depan</label>
-                        <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                            id="firstName" placeholder="" value="" name="first_name" required>
-                        <div class="invalid-feedback">
-                            Valid first name is required.
+
+                        <div class="col-sm-12">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control @error('first_name') is-invalid @enderror"
+                                id="nama" placeholder="" value="KKIHJHJ" name="nama" required>
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6">
-                        <label for="lastName" class="form-label">Nama Belakang</label>
-                        <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                            id="lastName" placeholder="" value="" name="last_name" required>
-                        <div class="invalid-feedback">
-                            Valid last name is required.
+
+
+                        <div class="col-12">
+                            <label for="no_hp" class="form-label">Nomor HP</label>
+                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
+                                id="no_hp" placeholder="" value="87969" name="no_hp" required>
+                            <div class="invalid-feedback">
+                                Valid Nomor is required.
+                            </div>
                         </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email </label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                value="AWDADW@ADWD.AWDA" id="email" placeholder="you@example.com" name="email"
+                                required>
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-12">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror"
+                                id="alamat" name="alamat" value="DAWDAWD" required>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="hidden" class="form-control @error('total_harga') is-invalid @enderror"
+                                id="total_harga" placeholder="" value="" name="total_harga" required>
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="status" class="form-label"></label>
+                            <input type="hidden" class="form-control" id="status" value="belum dibayar"
+                                name="status" required>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+                        <label class="my -6" for="jenis_pembayaran" class="form-label">Metode
+                            Pembayaran</label>
+
+                        <div class="my 1">
+                            <div class="form-check">
+                                <input id="credit" name="jenis_pembayaran" type="radio" value="BRI"
+                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" checked
+                                    required>
+                                <label class="badge form-check-label bg-secondary" for="credit">BRI</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="debit" name="jenis_pembayaran" type="radio" value="BCA"
+                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" required>
+                                <label class="badge form-check-label bg-secondary" for="debit">BCA</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="paypal" name="jenis_pembayaran" type="radio" value="MANDIRI"
+                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" required>
+                                <label class="badge form-check-label bg-secondary" for="paypal">MANDIRI</label>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan
+                            Checkout</button>
                     </div>
-                </div>
-
-
-                <div class="col-12">
-                    <label for="no_hp" class="form-label">Nomor HP</label>
-                    <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp"
-                        placeholder="" value="" name="no_hp" required>
-                    <div class="invalid-feedback">
-                        Valid Nomor is required.
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <label for="email" class="form-label">Email </label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                        placeholder="you@example.com" name="email" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
-                    </div>
-                </div>
-
-
-
-
-                <div class="col-12">
-                    <label for="address" class="form-label">Alamat</label>
-                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
-                        name="address" s required>
-                    <div class="invalid-feedback">
-                        Please enter your shipping address.
-                    </div>
-                </div>
-
-
-                <div class="col-12">
-                    <label for="status" class="form-label"></label>
-                    <input type="hidden" class="form-control" id="status" value="belum dibayar" name="status"
-                        required>
-                    <div class="invalid-feedback">
-                        Please enter your shipping address.
-                    </div>
-                </div>
-
-                <label class="my -6" for="payment" class="form-label">Metode Pembayaran</label>
-
-                <div class="my 1">
-                    <div class="form-check">
-                        <input id="credit" name="payment" type="radio" value="BRI"
-                            class="form-check-input @error('payment') is-invalid @enderror" checked required>
-                        <label class="badge form-check-label bg-secondary" for="credit">BRI</label>
-                    </div>
-                    <div class="form-check">
-                        <input id="debit" name="payment" type="radio" value="BCA"
-                            class="form-check-input @error('payment') is-invalid @enderror" required>
-                        <label class="badge form-check-label bg-secondary" for="debit">BCA</label>
-                    </div>
-                    <div class="form-check">
-                        <input id="paypal" name="payment" type="radio" value="MANDIRI"
-                            class="form-check-input @error('payment') is-invalid @enderror" required>
-                        <label class="badge form-check-label bg-secondary" for="paypal">MANDIRI</label>
-                    </div>
-                </div>
-                <hr class="my-4">
-
-                <button class="w-100 btn btn-primary btn-lg" onclick="return confirm ('lanjutkan checkout')"
-                    type="submit">Lanjutkan
-                    Checkout</button>
-            </div>
             </form>
+
+
+
     </div>
     </div>
     </main>
 
-    < </div>
 
 
 
 
-        <!-- <script src="js/checkout/form-validation.js"></script> -->
+
+    <!-- <script src="js/checkout/form-validation.js"></script> -->
 </body>
 
 </html>

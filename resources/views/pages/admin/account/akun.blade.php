@@ -18,7 +18,7 @@
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $u->id }}">
-                        <button class="btn btn-danger" type="submit">DELETE</button>
+                        <button class="btn btn-danger" type="submit">Hapus</button>
                 </td>
             </tr>
         @endforeach

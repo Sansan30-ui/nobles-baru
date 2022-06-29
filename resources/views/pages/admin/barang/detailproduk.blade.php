@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in</title>
+    <title>CheckOut</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -120,13 +120,9 @@
                                         <option>4</option>
                                         <option>5</option>
                                         <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
                                     </select>
                                 </div>
-                                <input type="text" class="form-control" id="id" value="{{ $item->id }}"
+                                <input type="hidden" class="form-control" id="id" value="{{ $item->id }}"
                                     name="id" required>
 
                             </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,7 @@ Route::get('/dashboard', function () {
     return view('pages.admin.dashboard.index');
 })->name('dashboard');
 
-Route::get('/', [HomeController::class, 'index'])->name('coba');
+
 
 Route::get('/produk', [ProdukController::class, 'index']);
 
@@ -42,32 +43,44 @@ Route::get('/tambah', function () {
     return view('pages.admin.barang.tambah');
 })->name('tambah');
 
+
+Route::get('/transaksi', function () {
+    return view('pages.admin.transaksi.transaksi');
+})->name('transaksi');
+
+
+Route::get('/profile', function () {
+    return view('pages.user.profile');
+})->name('profile');
+
+Route::get('/pesanan', function () {
+    return view('pages.user.pesanan');
+})->name('pesanan');
+
 Route::get('/akun', [UserController::class, 'index']);
 Route::delete('/akun/{id}', [UserController::class, 'destroy']);
 
-// Route::get('/transaksi', function () {
-//     return view('pages.admin.transaksi.transaksi');
-// })->name('transaksi');
 
-
-
-Route::get('/payment/{id}', [PaymentController::class, 'payment']);
 
 Route::resource('barang', BarangController::class);
 
 Route::get('/register', [RegisterController::class]);
 Route::post('/register', [RegisterController::class, 'store']);
+
+Route::post('/payment/{id}', [TransaksiController::class, 'payment']);
 Route::get('/detail/{id}', [DetailController::class, 'detail']);
-
 Route::post('/keranjang', [CartController::class, 'store']);
-
+Route::post('/checkout', [TransaksiController::class, 'store']);
 Route::get('/cart/{id}', [CartController::class, 'index']);
+
+
 
 // Auth::routes();
 
 Auth::routes();
 route::auth();
 
+// Route::get('/', [HomeController::class, 'index'])->name('coba');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
@@ -79,9 +92,8 @@ route::group(['middleware' => ['login_check:admin']], function () {
     })->name('dashboard');
 });
 route::group(['middleware' => ['login_check:user']], function () {
-
-    Route::get('/', [HomeController::class, 'index'])->name('coba');
 });
+Route::get('/', [HomeController::class, 'index'])->name('coba');
 // Route::middleware(['admin'])->group(function () {
 
 // });
