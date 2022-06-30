@@ -129,7 +129,7 @@
                                         <div class="p-5">
                                             <h3 class="fw-bold mb-5 mt-2 pt-1">Detail Pesanan</h3>
                                             <hr class="my-4">
-                                            @foreach ($keranjang as $item)
+                                            @foreach ($keranjang as $key => $item)
                                                 <input type="hidden" name="barang_id[]" id=""
                                                     value="{{ $item->barang_id }}">
                                                 <input type="hidden" name="keranjang_id[]" id=""
@@ -138,22 +138,25 @@
                                                     value="{{ $item->jumlah }}"> --}}
                                                 <div class="d-flex justify-content-between mb-4">
                                                     <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
-                                                    <h5>{{ $hargaItem[0] = $item->barang->harga * $item->jumlah }}
+                                                    <h5>{{ $hargaItem[] = $item->barang->harga * $item->jumlah }}
                                                     </h5>
                                                 </div>
-                                                <input type="hidden" name="{{ $item->ukuran }}[]"
+                                                <input type="hidden"
+                                                    name="barang_id[{{ $key }}][{{ $item->ukuran }}]"
                                                     value="{{ $item->jumlah }}">
                                             @endforeach
                                             <hr class="my-4">
 
                                             <div class="d-flex justify-content-between mb-5">
                                                 <h5 class="text-uppercase">Total price</h5>
-                                                {{-- @php
-                                                foreach ($hargaItem as $value) {
-                                                    $total = $value += $item->barang->harga;
-                                                }
-                                            @endphp
-                                            <h5>{{ $total }}</h5> --}}
+                                                @php
+                                                    $total = 0;
+                                                    foreach ($hargaItem as $value) {
+                                                        // Artinya adalah : $value = $value+$item->barang->harga;
+                                                        $total = $total + $value;
+                                                    }
+                                                @endphp
+                                                <h5>{{ $total }}</h5>
 
                                             </div>
 

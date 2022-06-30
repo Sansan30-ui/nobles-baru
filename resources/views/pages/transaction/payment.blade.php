@@ -83,36 +83,44 @@
                         </h4>
 
                         <ul class="list-group mb-3">
-                            @foreach ($keranjang as $p)
-                                <li class="list-group-item d-flex justify-content-between lh-sm mb-3">
-                                    <div>
+                            <li class="list-group-item lh-sm mb-3">
+                                @foreach ($keranjang as $key => $p)
+                                    {{-- <div class="card">
+                                        <div class="card-body"></div>
+                                    </div> --}}
+                                    <div class="d-flex justify-content-between">
                                         <h6 style="font-size:15px" class="my-1" name="produk">
                                             {{ $p->barang->nama }}
                                         </h6>
-                                        <h6>{{ $p->barang_id }}</h6>
+                                        <h6>{{ $p->barang->harga }}</h6>
                                         <input type="hidden" name="ids[]" value="{{ $p->barang_id }}">
 
-                                        <input type="hidden" type="text"name="ukuran[]" value="{{ $p->ukuran }}">
+                                        {{-- <input type="hidden" type="text"name="ukuran[]" value="{{ $p->ukuran }}"> --}}
 
+                                        <input type="hidden"
+                                            type="text"name="ukuran[{{ $key }}][{{ $p->ukuran }}]"
+                                            value="{{ $p->jumlah }}">
+
+                                        <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
+                                            name="harga[]">
                                     </div>
-                                    <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
-                                        name="harga[]">
+
+                                    {{-- <input type="text" name="" id="" value="{{ $p }}"> --}}
+                                @endforeach
+
+                            </li>
 
 
 
-                                </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="fw-bold">Total</span>
+                                <strong>.............</strong>
+                            </li>
 
-
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span class="fw-bold">Total</span>
-                                    <strong>.............</strong>
-                                </li>
-                            @endforeach
-
-                            <input type="hidden" name="xl" value="{{ $jumlah_barang['XL'] }}">
+                            {{-- <input type="hidden" name="xl" value="{{ $jumlah_barang['XL'] }}">
                             <input type="hidden" name="l" value="{{ $jumlah_barang['L'] }}">
                             <input type="hidden" name="m" value="{{ $jumlah_barang['M'] }}">
-                            <input type="hidden" name="s" value="{{ $jumlah_barang['S'] }}">
+                            <input type="hidden" name="s" value="{{ $jumlah_barang['S'] }}"> --}}
                         </ul>
 
                     </div>
