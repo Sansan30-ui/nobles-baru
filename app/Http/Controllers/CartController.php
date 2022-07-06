@@ -14,13 +14,19 @@ class CartController extends Controller
     public function index($id)
     {
         // $total_harga = Keranjang::where()
+        // dd($keranjang);
         if ($id == Auth::user()->id) {
             $keranjang = Keranjang::where('user_id', Auth::user()->id)->get();
-            foreach ($keranjang as $array) {
-                $newArr[] = $array->barang_id;
+            // dd(count($keranjang));
+            if (count($keranjang) > 0) {
+                foreach ($keranjang as $array) {
+                    $newArr[] = $array->barang_id;
+                }
+                return view('pages.transaction.cart', ['keranjang' => $keranjang, 'ids' => $newArr]);
+            } else {
+                return view('pages.transaction.cart', ['keranjang' => $keranjang]);
             }
             // dd($newArr);
-            return view('pages.transaction.cart', ['keranjang' => $keranjang, 'ids' => $newArr]);
         } else {
             return view('pages.transaction.cart');
         }
@@ -41,8 +47,8 @@ class CartController extends Controller
     }
     public function destroy($id)
     {
-        $model = Keranjang::find($id);
-        $model->delete();
-        return redirect('barang');
+        $keranjang = Keranjang::find($id);
+        $keranjang->delete();
+        return redirect()->back();
     }
 }

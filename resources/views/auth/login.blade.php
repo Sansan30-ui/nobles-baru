@@ -124,7 +124,7 @@
                                 <button id="login" class="btn btn-block login-btn mb-4" type="submit"
                                     value="Login">Login</button>
                             </form>
-                            <a href="#!" class="forgot-password-link">Forgot password?</a>
+                            {{-- <a href="#!" class="forgot-password-link">Forgot password?</a> --}}
                             <p class="login-card-footer-text">Don't have an account? <a href="/register"
                                     class="text-reset">Register here</a></p>
                         </div>

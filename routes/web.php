@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Route::get('/midtrans', [MidtransController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('pages.admin.dashboard.index');
@@ -57,6 +60,12 @@ Route::get('/pesanan', function () {
     return view('pages.user.pesanan');
 })->name('pesanan');
 
+// Midtrans
+// Route::get('/midtrans', function () {
+//     return view('pages.transaction.midtrans');
+// })->name('midtrans');
+
+
 Route::get('/akun', [UserController::class, 'index']);
 Route::delete('/akun/{id}', [UserController::class, 'destroy']);
 
@@ -72,6 +81,7 @@ Route::get('/detail/{id}', [DetailController::class, 'detail']);
 Route::post('/keranjang', [CartController::class, 'store']);
 Route::post('/checkout', [TransaksiController::class, 'store']);
 Route::get('/cart/{id}', [CartController::class, 'index']);
+Route::delete('/cart/{id}', [CartController::class, 'destroy']);
 
 
 

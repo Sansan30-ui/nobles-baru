@@ -17,8 +17,12 @@ class Transaksi extends Migration
             $table->id();
             $table->integer('barang_id');
             $table->integer('user_id');
+            $table->string('nama');
+            $table->integer('no_hp');
+            $table->string('email');
             $table->string('alamat');
             $table->integer('total_harga');
+            $table->string('jenis_pembayaran');
             $table->string('status');
             $table->string('transaksi_status');
 

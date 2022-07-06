@@ -92,10 +92,9 @@
                                         <h6 style="font-size:15px" class="my-1" name="produk">
                                             {{ $p->barang->nama }}
                                         </h6>
-                                        <h6>{{ $p->barang->harga }}</h6>
+                                        <h6>Rp
+                                            {{ number_format($hargaItem[] = $p->barang->harga * $p->jumlah) }}</h6>
                                         <input type="hidden" name="ids[]" value="{{ $p->barang_id }}">
-
-                                        {{-- <input type="hidden" type="text"name="ukuran[]" value="{{ $p->ukuran }}"> --}}
 
                                         <input type="hidden"
                                             type="text"name="ukuran[{{ $key }}][{{ $p->ukuran }}]"
@@ -104,23 +103,22 @@
                                         <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
                                             name="harga[]">
                                     </div>
-
-                                    {{-- <input type="text" name="" id="" value="{{ $p }}"> --}}
                                 @endforeach
 
                             </li>
 
-
-
                             <li class="list-group-item d-flex justify-content-between">
                                 <span class="fw-bold">Total</span>
-                                <strong>.............</strong>
+                                @php
+                                    $total = 0;
+                                    foreach ($hargaItem as $value) {
+                                        // Artinya adalah : $value = $value+$item->barang->harga;
+                                        $total = $total + $value;
+                                    }
+                                @endphp
+                                <h5>Rp. {{ number_format($total) }}</h5>
                             </li>
 
-                            {{-- <input type="hidden" name="xl" value="{{ $jumlah_barang['XL'] }}">
-                            <input type="hidden" name="l" value="{{ $jumlah_barang['L'] }}">
-                            <input type="hidden" name="m" value="{{ $jumlah_barang['M'] }}">
-                            <input type="hidden" name="s" value="{{ $jumlah_barang['S'] }}"> --}}
                         </ul>
 
                     </div>
@@ -135,24 +133,19 @@
                             </div>
                         </div>
 
-
-
-
                         <div class="col-sm-12">
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                id="nama" placeholder="" value="KKIHJHJ" name="nama" required>
+                                id="nama" placeholder="" value="" name="nama" required>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
 
-
-
                         <div class="col-12">
                             <label for="no_hp" class="form-label">Nomor HP</label>
                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
-                                id="no_hp" placeholder="" value="87969" name="no_hp" required>
+                                id="no_hp" placeholder="" value="" name="no_hp" required>
                             <div class="invalid-feedback">
                                 Valid Nomor is required.
                             </div>
@@ -161,24 +154,21 @@
                         <div class="col-12">
                             <label for="email" class="form-label">Email </label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="AWDADW@ADWD.AWDA" id="email" placeholder="you@example.com" name="email"
-                                required>
+                                value="" id="email" placeholder="you@example.com" name="email" required>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
                         </div>
 
-
-
-
                         <div class="col-12">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror"
-                                id="alamat" name="alamat" value="DAWDAWD" required>
+                            <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="alamat" cols="7"
+                                rows="5"></textarea>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <input type="hidden" class="form-control @error('total_harga') is-invalid @enderror"
                                 id="total_harga" placeholder="" value="" name="total_harga" required>
@@ -186,6 +176,7 @@
                                 Valid first name is required.
                             </div>
                         </div>
+
                         <div class="col-12">
                             <label for="status" class="form-label"></label>
                             <input type="hidden" class="form-control" id="status" value="belum dibayar"
@@ -215,8 +206,11 @@
                                     class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" required>
                                 <label class="badge form-check-label bg-secondary" for="paypal">MANDIRI</label>
                             </div>
+
                         </div>
+
                         <hr class="my-4">
+
 
                         <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan
                             Checkout</button>
@@ -227,13 +221,20 @@
 
     </div>
     </div>
+    <button id="pay-button" onclick="payFunc()" class="w-20 btn btn-success btn-lg">Via
+        Midtrans</button>
     </main>
 
 
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-yukSvCI9H4QLH8Hq"></script>
 
 
-
-
+    <script type="text/javascript">
+        function payFunc() {
+            window.snap.pay('{{ $snap_token }}');
+        }
+    </script>
     <!-- <script src="js/checkout/form-validation.js"></script> -->
 </body>
 

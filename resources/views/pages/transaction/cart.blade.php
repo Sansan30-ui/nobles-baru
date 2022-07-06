@@ -53,6 +53,7 @@
 
 
 <body>
+    {{-- {{ dd(count($keranjang)) }} --}}
     <section class="h-100 h-custom" style="background-color: #d2c9ff;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -66,7 +67,7 @@
                                             <h1 class="fw-bold mb-0 text-black">Keranjang Belanja</h1>
                                             {{-- <h6 class="mb-0 text-muted">3 items</h6> --}}
                                         </div>
-                                        @if (empty($keranjang))
+                                        @if (count($keranjang) === 0)
                                             <div class="text-center">
                                                 keranjang kosong
                                             </div>
@@ -105,8 +106,16 @@
                                                     </div>
 
                                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                        <a href="#!" class="text-muted"><i
-                                                                class="fas fa-times"></i></a>
+                                                        <div class="button">
+                                                            <form action="{{ url('cart/' . $item->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <button type="submit"> <a href="#!"
+                                                                        class="text-muted"><i
+                                                                            class="fas fa-times"></i></a></button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -126,44 +135,77 @@
                                     <form action="{{ url('payment/' . auth()->user()->id) }}" method="post">
                                         @csrf
                                         @method('POST')
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-5 mt-2 pt-1">Detail Pesanan</h3>
-                                            <hr class="my-4">
-                                            @foreach ($keranjang as $key => $item)
-                                                <input type="hidden" name="barang_id[]" id=""
-                                                    value="{{ $item->barang_id }}">
-                                                <input type="hidden" name="keranjang_id[]" id=""
-                                                    value="{{ $item->id }}">
+                                        @if (count($keranjang) === 0)
+                                            <div class="p-5">
+                                                <h3 class="fw-bold mb-5 mt-2 pt-1">Detail Pesanan</h3>
+                                                <hr class="my-4">
+
+                                                <input type="hidden" name="" id="" value="">
+                                                <input type="hidden" name="" id="" value="">
                                                 {{-- <input type="hidden" name="cart_total" id=""
-                                                    value="{{ $item->jumlah }}"> --}}
+                                                value="{{ $item->jumlah }}"> --}}
                                                 <div class="d-flex justify-content-between mb-4">
-                                                    <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
-                                                    <h5>{{ $hargaItem[] = $item->barang->harga * $item->jumlah }}
+                                                    <h5 class="text-uppercase"></h5>
+                                                    <h5>
                                                     </h5>
                                                 </div>
-                                                <input type="hidden"
-                                                    name="barang_id[{{ $key }}][{{ $item->ukuran }}]"
-                                                    value="{{ $item->jumlah }}">
-                                            @endforeach
-                                            <hr class="my-4">
+                                                <input type="hidden" name="" value="">
 
-                                            <div class="d-flex justify-content-between mb-5">
-                                                <h5 class="text-uppercase">Total price</h5>
-                                                @php
-                                                    $total = 0;
-                                                    foreach ($hargaItem as $value) {
-                                                        // Artinya adalah : $value = $value+$item->barang->harga;
-                                                        $total = $total + $value;
-                                                    }
-                                                @endphp
-                                                <h5>{{ $total }}</h5>
+                                                <hr class="my-4">
+
+                                                <div class="d-flex justify-content-between mb-5">
+                                                    <h5 class="text-uppercase">Total price</h5>
+
+                                                    <h5>Rp. 0</h5>
+
+                                                </div>
+
+                                                <button disabled type="submit" class="btn btn-dark btn-block btn-lg"
+                                                    data-mdb-ripple-color="dark">Checkout</button>
 
                                             </div>
+                                        @else
+                                            <div class="p-5">
+                                                <h3 class="fw-bold mb-5 mt-2 pt-1">Detail Pesanan</h3>
+                                                <hr class="my-4">
+                                                @foreach ($keranjang as $key => $item)
+                                                    <input type="hidden" name="barang_id[]" id=""
+                                                        value="{{ $item->barang_id }}">
+                                                    <input type="hidden" name="keranjang_id[]" id=""
+                                                        value="{{ $item->id }}">
+                                                    {{-- <input type="hidden" name="cart_total" id=""
+                                                    value="{{ $item->jumlah }}"> --}}
+                                                    <div class="d-flex justify-content-between mb-4">
+                                                        <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
+                                                        <h5>Rp.
+                                                            {{ number_format($hargaItem[] = $item->barang->harga * $item->jumlah) }}
+                                                        </h5>
+                                                    </div>
+                                                    <input type="hidden"
+                                                        name="barang_id[{{ $key }}][{{ $item->ukuran }}]"
+                                                        value="{{ $item->jumlah }}">
+                                                @endforeach
+                                                <hr class="my-4">
 
-                                            <button type="submit" class="btn btn-dark btn-block btn-lg"
-                                                data-mdb-ripple-color="dark">Checkout</button>
+                                                <div class="d-flex justify-content-between mb-5">
+                                                    <h5 class="text-uppercase">Total price</h5>
+                                                    @php
+                                                        $total = 0;
+                                                        foreach ($hargaItem as $value) {
+                                                            // Artinya adalah : $value = $value+$item->barang->harga;
+                                                            $total = $total + $value;
+                                                        }
+                                                    @endphp
+                                                    <h5>Rp. {{ number_format($total) }}</h5>
 
-                                        </div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-dark btn-block btn-lg"
+                                                    data-mdb-ripple-color="dark">Checkout</button>
+
+                                            </div>
+                                        @endif
+
                                     </form>
                                 </div>
 
