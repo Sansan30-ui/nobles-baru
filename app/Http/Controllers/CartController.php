@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Keranjang;
+use Alert;
 
 class CartController extends Controller
 {
@@ -43,12 +44,14 @@ class CartController extends Controller
         ]);
         // alihkan halaman tambah buku ke halaman books
         // return redirect ('/upload');
-        return redirect('/');
+        alert()->success('Barang berhasil dimasukan kedalam keranjang', 'Sukses');
+        return redirect()->back();
     }
     public function destroy($id)
     {
         $keranjang = Keranjang::find($id);
         $keranjang->delete();
+        alert()->success('Barang berhasil dihapus', '');
         return redirect()->back();
     }
 }

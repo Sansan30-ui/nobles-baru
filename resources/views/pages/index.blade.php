@@ -81,7 +81,7 @@
 
             <div class="row justify-content-end">
                 <div class="col-md-4">
-                    <form action="/home">
+                    <form action="/home/search" method="get">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Cari.." name="search"
                                 value="{{ request('search') }}">

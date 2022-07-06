@@ -34,7 +34,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/produk', [ProdukController::class, 'index']);
 
-
+Route::get('/home/search', [HomeController::class, 'search']);
 
 // Route::get('/detail', [DetailController::class, 'index']);
 
@@ -52,9 +52,7 @@ Route::get('/transaksi', function () {
 })->name('transaksi');
 
 
-Route::get('/profile', function () {
-    return view('pages.user.profile');
-})->name('profile');
+Route::get('/profile', [UserController::class, 'edit'])->name('profile');
 
 Route::get('/pesanan', function () {
     return view('pages.user.pesanan');

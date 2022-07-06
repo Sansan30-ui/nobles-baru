@@ -82,7 +82,7 @@
                             <!-- <span class="badge bg-primary rounded-pill">3</span> -->
                         </h4>
 
-                        <ul class="list-group mb-3">
+                        <ul class="list-group mb-3" style="list-style-type: none">
                             <li class="list-group-item lh-sm mb-3">
                                 @foreach ($keranjang as $key => $p)
                                     {{-- <div class="card">
@@ -118,6 +118,9 @@
                                 @endphp
                                 <h5>Rp. {{ number_format($total) }}</h5>
                             </li>
+                            <li><button id="pay-button" target="_blank" onclick="payFunc()"
+                                    class="w-20 btn btn-success btn-lg mt-5">Bayar Via
+                                    Midtrans</button></li>
 
                         </ul>
 
@@ -137,7 +140,7 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                                 id="nama" placeholder="" value="" name="nama" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" role="alert">
                                 Valid first name is required.
                             </div>
                         </div>
@@ -146,7 +149,7 @@
                             <label for="no_hp" class="form-label">Nomor HP</label>
                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
                                 id="no_hp" placeholder="" value="" name="no_hp" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" role="alert">
                                 Valid Nomor is required.
                             </div>
                         </div>
@@ -155,7 +158,7 @@
                             <label for="email" class="form-label">Email </label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                 value="" id="email" placeholder="you@example.com" name="email" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" role="alert">
                                 Please enter a valid email address for shipping updates.
                             </div>
                         </div>
@@ -164,7 +167,7 @@
                             <label for="alamat" class="form-label">Alamat</label>
                             <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="alamat" cols="7"
                                 rows="5"></textarea>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" role="alert">
                                 Please enter your shipping address.
                             </div>
                         </div>
@@ -221,8 +224,6 @@
 
     </div>
     </div>
-    <button id="pay-button" onclick="payFunc()" class="w-20 btn btn-success btn-lg">Via
-        Midtrans</button>
     </main>
 
 
@@ -233,6 +234,7 @@
     <script type="text/javascript">
         function payFunc() {
             window.snap.pay('{{ $snap_token }}');
+
         }
     </script>
     <!-- <script src="js/checkout/form-validation.js"></script> -->

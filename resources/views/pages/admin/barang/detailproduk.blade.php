@@ -104,10 +104,22 @@
                                     <label for="ukuran">Ukuran</label>
                                     <select name="ukuran" class="form-control" selected id="ukuran">
                                         <option selected>--- Pilih Ukuran ---</option>
-                                        <option>S</option>
-                                        <option>M</option>
-                                        <option>L</option>
-                                        <option>XL</option>
+                                        @if ($item->s == null)
+                                        @else
+                                            <option>S</option>
+                                        @endif
+                                        @if ($item->m == null)
+                                        @else
+                                            <option>M</option>
+                                        @endif
+                                        @if ($item->l == null)
+                                        @else
+                                            <option>L</option>
+                                        @endif
+                                        @if ($item->xl == null)
+                                        @else
+                                            <option>XL</option>
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-6 form-group" id="jumlah">
@@ -218,14 +230,20 @@
                             {{-- <a href="{{ url('payment/' . $item->id) }}"><button class="btn btn-produk">Beli
                                     Sekarang</button></a> --}}
                             <button id="add-cart" class="btn btn-produk" data-toggle="modal"
-                                data-target="#modalProduk"><i class="fas fa-cart-plus mr-2"></i>Add to
-                                Cart</button>
+                                data-target="#modalProduk"><i class="fas fa-cart-plus mr-2"></i>Tambah
+                                Pesanan</button>
                         </div>
                     </div>
                 </div>
 
 
             </div>
+        </div>
+        <div class="pt-5">
+            <h6 class="mb-0"><a href="/produk" class="text-body"><i
+                        class="fas fa-long-arrow-alt-left me-2"></i>Kembali Belanja
+                </a>
+            </h6>
         </div>
     </div>
 
@@ -254,6 +272,8 @@
             });
         });
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @include('sweet::alert')
 </body>
 
 </html>
