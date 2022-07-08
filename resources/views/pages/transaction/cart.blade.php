@@ -76,9 +76,9 @@
                                                 <hr class="my-4">
                                                 <div class="row mb-4 d-flex justify-content-between align-items-center">
                                                     <div class="col-md-2 col-lg-2 col-xl-2">
-                                                        {{-- <img src="{{ asset('images/' . $item->barang->gambar[0]) }}"
-                                                            alt="First slide"> --}}
-                                                        {{ $item->barang->gambar[0] }}
+                                                        <img src="{{ asset('images/' . $item->barang->gambar[0]) }}"
+                                                            alt="gambar barang">
+
                                                     </div>
                                                     <div class="col-md-3 col-lg-3 col-xl-3">
                                                         <h6 class="text-muted">{{ $item->barang->jenis }}</h6>

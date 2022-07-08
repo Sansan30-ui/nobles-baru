@@ -227,8 +227,6 @@
                             <h6>Deskripsi: <span class="deskripsi">{{ $item->deskripsi }}</span></h6>
                         </div>
                         <div class="btn-produk">
-                            {{-- <a href="{{ url('payment/' . $item->id) }}"><button class="btn btn-produk">Beli
-                                    Sekarang</button></a> --}}
                             <button id="add-cart" class="btn btn-produk" data-toggle="modal"
                                 data-target="#modalProduk"><i class="fas fa-cart-plus mr-2"></i>Tambah
                                 Pesanan</button>
@@ -274,6 +272,8 @@
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @include('sweet::alert')
+
+
 </body>
 
 </html>

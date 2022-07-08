@@ -4,7 +4,7 @@
 
         <table class="table-bordered table mt-5">
             <tr>
-                <th>Nama Pembeli</th>
+                <th>Nama</th>
                 <th>Alamat</th>
                 <th>Total Harga</th>
                 <th>Resi Pengiriman</th>
