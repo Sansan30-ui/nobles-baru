@@ -17,16 +17,20 @@ class CartController extends Controller
         // $total_harga = Keranjang::where()
         if ($id == Auth::user()->id) {
             $keranjang = Keranjang::with('barang')->where('user_id', Auth::user()->id)->get();
+            // $keranjang_s = Keranjang::with('barang')->where('user_id', Auth::user()->id)->first();
             // dd($keranjang);
             // dd(count($keranjang));
             if (count($keranjang) > 0) {
                 foreach ($keranjang as $array) {
                     $newArr[] = $array->barang_id;
-                    // dd($array->barang->gambar);
-                    // $array->barang->gambar = unserialize($array->barang->gambar);
+                    // dd($array->barang);
+                    // $gambar[] = unserialize($array->barang->gambar);
                     // $array->barang->($unserializeGambar);
+                    // $tes = DB::table('tb_barang')->where('id', $array->barang_id)->first();
                 }
-                // dd($keranjang);
+                // dd($gambar);
+                // $tes->gambar = unserialize($tes->gambar);
+                // dd($keranjang_s->barang->gambar);
                 return view('pages.transaction.cart', ['keranjang' => $keranjang,  'ids' => $newArr]);
             } else {
                 return view('pages.transaction.cart', ['keranjang' => $keranjang]);

@@ -36,7 +36,7 @@ Route::get('/produk', [ProdukController::class, 'index']);
 
 Route::get('/home/search', [HomeController::class, 'search']);
 
-// Route::get('/detail', [DetailController::class, 'index']);
+
 
 Route::get('/barang', function () {
     return view('pages.admin.barang.index');
@@ -58,14 +58,11 @@ Route::get('/pesanan', function () {
     return view('pages.user.pesanan');
 })->name('pesanan');
 
-// Midtrans
-// Route::get('/midtrans', function () {
-//     return view('pages.transaction.midtrans');
-// })->name('midtrans');
-
 
 Route::get('/akun', [UserController::class, 'index']);
+Route::put('/akun', [UserController::class, 'update']);
 Route::delete('/akun/{id}', [UserController::class, 'destroy']);
+Route::put('/password', [UserController::class, 'update_password']);
 
 
 

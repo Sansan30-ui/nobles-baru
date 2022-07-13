@@ -18,6 +18,9 @@
     <link href="/css/checkout/bootstrap.min.css" rel="stylesheet">
     <link href="img/shop/image.png" rel='shortcut icon'>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -72,22 +75,20 @@
                 <p><strong>................</strong></p>
             </div>
 
-            <form class="needs-validation" novalidate action="/checkout" method="POST" enctype="multipart/form-data">
+            <form class="needs-validation" id="submit_form" novalidate action="/checkout" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="row g-5">
                     {{-- {{ dd($keranjang) }} --}}
                     <div class="col-md-5 col-lg-4 order-md-last">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-dark">cart</span>
-                            <!-- <span class="badge bg-primary rounded-pill">3</span> -->
+
                         </h4>
 
                         <ul class="list-group mb-3" style="list-style-type: none">
                             <li class="list-group-item lh-sm mb-3">
                                 @foreach ($keranjang as $key => $p)
-                                    {{-- <div class="card">
-                                        <div class="card-body"></div>
-                                    </div> --}}
                                     <div class="d-flex justify-content-between">
                                         <h6 style="font-size:15px" class="my-1" name="produk">
                                             {{ $p->barang->nama }}
@@ -102,6 +103,9 @@
 
                                         <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
                                             name="harga[]">
+
+                                        <input type="hidden" name="json" id="json_callback">
+
                                     </div>
                                 @endforeach
 
@@ -118,7 +122,7 @@
                                 @endphp
                                 <h5>Rp. {{ number_format($total) }}</h5>
                             </li>
-                            <li><button id="pay-button" target="_blank" onclick="payFunc()"
+                            <li><button id="pay-button" type="button" target="" onclick="payFunc()"
                                     class="w-20 btn btn-success btn-lg mt-5">Bayar Via
                                     Midtrans</button></li>
 
@@ -139,7 +143,7 @@
                         <div class="col-sm-12">
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                id="nama" placeholder="" value="" name="nama" required>
+                                id="nama" placeholder="" value="safasjkgfijas" name="nama" required>
                             <div class="invalid-feedback" role="alert">
                                 Valid first name is required.
                             </div>
@@ -148,7 +152,7 @@
                         <div class="col-12">
                             <label for="no_hp" class="form-label">Nomor HP</label>
                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
-                                id="no_hp" placeholder="" value="" name="no_hp" required>
+                                id="no_hp" placeholder="" value="08914124" name="no_hp" required>
                             <div class="invalid-feedback" role="alert">
                                 Valid Nomor is required.
                             </div>
@@ -157,7 +161,8 @@
                         <div class="col-12">
                             <label for="email" class="form-label">Email </label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="" id="email" placeholder="you@example.com" name="email" required>
+                                value="sadasd@gmail.com" id="email" placeholder="you@example.com" name="email"
+                                required>
                             <div class="invalid-feedback" role="alert">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -165,8 +170,8 @@
 
                         <div class="col-12">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="alamat" cols="7"
-                                rows="5"></textarea>
+                            <textarea name="alamat" value="sadjkbsajfgas" class="form-control @error('alamat') is-invalid @enderror"
+                                id="alamat" cols="7" rows="5"></textarea>
                             <div class="invalid-feedback" role="alert">
                                 Please enter your shipping address.
                             </div>
@@ -215,7 +220,7 @@
                         <hr class="my-4">
 
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan
+                        <button class="w-100  btn-lg" type="submit">Lanjutkan
                             Checkout</button>
                     </div>
             </form>
@@ -233,8 +238,35 @@
 
     <script type="text/javascript">
         function payFunc() {
-            window.snap.pay('{{ $snap_token }}');
+            window.snap.pay('{{ $snap_token }}', {
+                onSuccess: function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment success!");
+                    console.log(result);
+                    send_response_to_form(result);
+                },
+                onPending: function(result) {
+                    /* You may add your own implementation here */
+                    alert("wating your payment!");
+                    console.log(result);
+                    send_response_to_form(result);
+                },
+                onError: function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment failed!");
+                    console.log(result);
+                    send_response_to_form(result);
+                },
+                onClose: function() {
+                    /* You may add your own implementation here */
+                    alert('you closed the popup without finishing the payment');
+                }
+            })
+        }
 
+        function send_response_to_form(result) {
+            document.getElementById('json_callback').value = JSON.stringify(result);
+            $('#submit_form').submit();
         }
     </script>
     <!-- <script src="js/checkout/form-validation.js"></script> -->

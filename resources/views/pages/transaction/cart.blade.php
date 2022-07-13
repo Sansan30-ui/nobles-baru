@@ -76,7 +76,8 @@
                                                 <hr class="my-4">
                                                 <div class="row mb-4 d-flex justify-content-between align-items-center">
                                                     <div class="col-md-2 col-lg-2 col-xl-2">
-                                                        <img src="{{ asset('images/' . $item->barang->gambar[0]) }}"
+                                                        <img width="100px"
+                                                            src="{{ asset('images/' . $item->barang->gambar[0]) }}"
                                                             alt="gambar barang">
 
                                                     </div>
@@ -86,18 +87,12 @@
                                                         <h6 class="text-black mb-0">{{ $item->barang->nama }}</h6>
                                                     </div>
                                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex text-center">
-                                                        {{-- <button class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button> --}}
+
 
                                                         <label id="form1" min="1" name="quantity"
                                                             type="number" class="">{{ $item->jumlah }}</label>
 
-                                                        {{-- <button class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                            <i class="fas fa-plus"></i>
-                                                        </button> --}}
+
                                                     </div>
                                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                         <h6 class="mb-0">
@@ -142,8 +137,7 @@
 
                                                 <input type="hidden" name="" id="" value="">
                                                 <input type="hidden" name="" id="" value="">
-                                                {{-- <input type="hidden" name="cart_total" id=""
-                                                value="{{ $item->jumlah }}"> --}}
+
                                                 <div class="d-flex justify-content-between mb-4">
                                                     <h5 class="text-uppercase"></h5>
                                                     <h5>
@@ -173,8 +167,6 @@
                                                         value="{{ $item->barang_id }}">
                                                     <input type="hidden" name="keranjang_id[]" id=""
                                                         value="{{ $item->id }}">
-                                                    {{-- <input type="hidden" name="cart_total" id=""
-                                                    value="{{ $item->jumlah }}"> --}}
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <h5 class="text-uppercase">{{ $item->barang->nama }}</h5>
                                                         <h5>Rp.

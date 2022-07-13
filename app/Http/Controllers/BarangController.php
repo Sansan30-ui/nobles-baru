@@ -16,10 +16,11 @@ class BarangController extends Controller
     public function index()
     {
         $barangs = Barang::all();
-        foreach ($barangs as $br => $value) {
-            $value->gambar = unserialize($value->gambar);
-            // dd($value->gambar);
-        }
+        // foreach ($barangs as $br => $value) {
+        //     $value->gambar = $value->gambar;
+        //     // dd($value->gambar);
+        // }
+        // dd($barangs);
 
         return view('pages.admin.barang.index', compact(
             'barangs'
@@ -66,7 +67,8 @@ class BarangController extends Controller
             }
         }
 
-        $model->gambar = serialize($files);
+        $model->gambar = $files;
+        // dd($model->gambar);
         // dd($model);
         $model->save();
 
@@ -93,7 +95,6 @@ class BarangController extends Controller
     public function edit($id)
     {
         $model = Barang::find($id);
-        $model['gambar'] = unserialize($model->gambar);
         // dd($model->gambar);
         return view('pages.admin.barang.edit', compact(
             'model'
@@ -135,7 +136,7 @@ class BarangController extends Controller
                 $files[] = $model->gambar;
             }
 
-            $model->gambar = serialize($files);
+            $model->gambar = $files;
             // dd($request->all());
             $model->save();
 

@@ -16,6 +16,10 @@ class Barang extends Model
     // {
 
     // }
+    protected $casts = [
+        'gambar' => 'array',
+    ];
+
     public function keranjang()
     {
         return $this->hasMany(Keranjang::class);

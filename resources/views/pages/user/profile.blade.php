@@ -1,6 +1,27 @@
 @extends('layouts.user')
 @section('content')
     {{-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if ($message = Session::get('status'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @elseif($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+
     <div class="container">
         <div class="row flex-lg-nowrap">
             <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
@@ -18,16 +39,18 @@
                                 <div class="e-profile">
                                     <div class="tab-content pt-3">
                                         <div class="tab-pane active">
-                                            <form class="form" novalidate="">
+                                            <form class="form" action="{{ url('/akun') }}" method="POST">
+                                                @csrf
+                                                @method('put')
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="form-group">
-                                                                    <label>Nama Lengkap</label>
+                                                                    <label>Nama</label>
                                                                     <input class="form-control" type="text"
-                                                                        name="nama" placeholder="New Username"
-                                                                        value="{{ $user[0]->name }}">
+                                                                        name="name" placeholder="New Username"
+                                                                        value="{{ Auth::user()->name }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -36,68 +59,94 @@
                                                                 <div class="form-group">
                                                                     <label>Email</label>
                                                                     <input class="form-control" type="text"
-                                                                        placeholder="user@example.com"
-                                                                        value="{{ $user[0]->email }}">
+                                                                        name="email" placeholder="user@example.com"
+                                                                        value="{{ Auth::user()->email }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label>Nomor HP</label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="no_hp" placeholder="+62"
+                                                                        value="{{ Auth::user()->no_hp }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label>Alamat</label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="alamat" placeholder="jln...."
+                                                                        value="{{ Auth::user()->alamat }}">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <div class="col d-flex justify-content-between">
+                                                        <button class="btn btn-primary" type="submit">Simpan
+                                                            Perubahan</button>
+                                                        <button id="ubahPassword" type="button" class="btn btn-primary"
+                                                            data-toggle="modal" data-target="#ubah-password">
+                                                            Ubah Password</button>
+                                                    </div>
+                                                </div>
                                             </form>
-                                            <div class="row">
-                                                <div class="col d-flex justify-content-between">
-                                                    <button class="btn btn-primary" type="submit">Save
-                                                        Changes</button>
-                                                    <button id="ubahPassword" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#ubah-password">
-                                                        Ubah Password</button>
-                                                </div>
-                                            </div>
-                                            <div class="modal fade" id="ubah-password" tabindex="-1" role="dialog"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Ubah Password
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="">
-                                                                <div class="form-group" id="password">
-                                                                    <label>Password Sekarang</label>
-                                                                    <input class="form-control" type="text"
-                                                                        name="password"
-                                                                        placeholder="Masukan Password Sekarang">
-                                                                </div>
-                                                                <div class="form-group" id="passwordbaru">
-                                                                    <label>Password Baru</label>
-                                                                    <input class="form-control" type="text"
-                                                                        name="passwordbaru"
-                                                                        placeholder="Masukan Password Baru">
-                                                                </div>
-                                                                <div class="form-group" id="konfirpassword">
-                                                                    <label>Konfirmasi Password</label>
-                                                                    <input class="form-control" type="text"
-                                                                        name="konfirpassword"
-                                                                        placeholder="Konfirmasi Password">
-                                                                </div>
 
+                                            <form action="{{ url('/password') }}" method="POST">
+                                                @csrf
+                                                @method('put')
+                                                <div class="modal fade" id="ubah-password" tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Ubah Password
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan
-                                                                Perubahan</button>
+                                                            <div class="modal-body">
+                                                                <div class="">
+                                                                    <div class="form-group" id="password">
+                                                                        <label>Password Sekarang</label>
+                                                                        <input class="form-control" type="password"
+                                                                            name="password_lama"
+                                                                            placeholder="Masukan Password Sekarang">
+                                                                    </div>
+                                                                    <div class="form-group" id="passwordbaru">
+                                                                        <label>Password Baru</label>
+                                                                        <input class="form-control" type="password"
+                                                                            name="password"
+                                                                            placeholder="Masukan Password Baru">
+                                                                    </div>
+                                                                    <div class="form-group" id="konfirpassword">
+                                                                        <label>Konfirmasi Password</label>
+                                                                        <input class="form-control" type="password"
+                                                                            name="konfirmasi_password"
+                                                                            placeholder="Konfirmasi Password">
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Batal</button>
+                                                                <button type="submit" class="btn btn-primary">Simpan
+                                                                    Perubahan</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>

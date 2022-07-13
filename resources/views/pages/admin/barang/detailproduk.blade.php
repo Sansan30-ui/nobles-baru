@@ -85,69 +85,69 @@
 
 <body class="hold-transition login-page">
     <!-- Modal -->
-    @foreach ($products as $item)
-        <form class="needs-validation" novalidate action="/keranjang" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal fade" id="modalProduk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Data Pesanan</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-6 form-group" id="ukuran">
-                                    <label for="ukuran">Ukuran</label>
-                                    <select name="ukuran" class="form-control" selected id="ukuran">
-                                        <option selected>--- Pilih Ukuran ---</option>
-                                        @if ($item->s == null)
-                                        @else
-                                            <option>S</option>
-                                        @endif
-                                        @if ($item->m == null)
-                                        @else
-                                            <option>M</option>
-                                        @endif
-                                        @if ($item->l == null)
-                                        @else
-                                            <option>L</option>
-                                        @endif
-                                        @if ($item->xl == null)
-                                        @else
-                                            <option>XL</option>
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="col-6 form-group" id="jumlah">
-                                    <label for="">Jumlah</label>
-                                    <select name="jumlah" id="jumlah" class="form-control">
-                                        <option selected>--- Pilih Jumlah ---</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                    </select>
-                                </div>
-                                <input type="hidden" class="form-control" id="id" value="{{ $item->id }}"
-                                    name="id" required>
-
+    {{-- @foreach ($products as $item) --}}
+    <form class="needs-validation" novalidate action="/keranjang" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal fade" id="modalProduk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Data Pesanan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 form-group" id="ukuran">
+                                <label for="ukuran">Ukuran</label>
+                                <select name="ukuran" class="form-control" selected id="ukuran">
+                                    <option selected>--- Pilih Ukuran ---</option>
+                                    @if ($products->s == null)
+                                    @else
+                                        <option>S</option>
+                                    @endif
+                                    @if ($products->m == null)
+                                    @else
+                                        <option>M</option>
+                                    @endif
+                                    @if ($products->l == null)
+                                    @else
+                                        <option>L</option>
+                                    @endif
+                                    @if ($products->xl == null)
+                                    @else
+                                        <option>XL</option>
+                                    @endif
+                                </select>
                             </div>
+                            <div class="col-6 form-group" id="jumlah">
+                                <label for="">Jumlah</label>
+                                <select name="jumlah" id="jumlah" class="form-control">
+                                    <option selected>--- Pilih Jumlah ---</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+                            <input type="hidden" class="form-control" id="id" value="{{ $products->id }}"
+                                name="id" required>
+
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan Keranjang</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Keranjang</button>
                     </div>
                 </div>
             </div>
-        </form>
-    @endforeach
+        </div>
+    </form>
+    {{-- @endforeach --}}
 
     <div class="container">
         <div class="card">
@@ -158,15 +158,15 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img class="d-block w-100" style="object-fit: cover"
-                                        src="{{ asset('images/' . $item->gambar[0]) }}" alt="First slide">
+                                        src="{{ asset('images/' . $products->gambar[0]) }}" alt="First slide">
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" style="object-fit: cover"
-                                        src="{{ asset('images/' . $item->gambar[1]) }}" alt="Second slide">
+                                        src="{{ asset('images/' . $products->gambar[1]) }}" alt="Second slide">
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" style="object-fit: cover"
-                                        src="{{ asset('images/' . $item->gambar[2]) }}" alt="Third slide">
+                                        src="{{ asset('images/' . $products->gambar[2]) }}" alt="Third slide">
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
@@ -185,46 +185,46 @@
                         <div class="title-div">
                             <h2 class="title-produk"
                                 style="text-transform: capitalize; font-weight: bold; color:#002C3E">
-                                {{ $item->nama }}</h2>
+                                {{ $products->nama }}</h2>
                         </div>
                         <div class="content">
                             <div style="display: flex">
                                 <p style="text-transform: capitalize; color: #aaaaaa; font-size: 14px" class="mr-2">
                                     Kategori : </p>
                                 <p style="font-weight: bold; color: #002C3E; font-size: 14px">
-                                    {{ $item->jenis }}</p>
+                                    {{ $products->jenis }}</p>
                             </div>
                             <h2 style="font-weight: bold">
-                                {{ 'Rp ' . number_format($item->harga, 0, ',', '.') }}
+                                {{ 'Rp ' . number_format($products->harga, 0, ',', '.') }}
                             </h2>
 
                             @php
-                                $total_stok = $item->s + $item->m + $item->l + $item->xl;
+                                $total_stok = $products->s + $products->m + $products->l + $products->xl;
                             @endphp
                             <h6 style="font-weight: bold">Size :</h6>
                             <div class="row mb-2">
                                 <div class="col-3">
                                     <button id="size">
-                                        S : {{ $item->s }}
+                                        S : {{ $products->s }}
                                     </button>
                                 </div>
                                 <div class="col-3">
                                     <button id="size">
-                                        M : {{ $item->m }}
+                                        M : {{ $products->m }}
                                     </button>
                                 </div>
                                 <div class="col-3">
                                     <button id="size">
-                                        L : {{ $item->l }}
+                                        L : {{ $products->l }}
                                     </button>
                                 </div>
                                 <div class="col-3">
                                     <button id="size">
-                                        XL : {{ $item->xl }}
+                                        XL : {{ $products->xl }}
                                     </button>
                                 </div>
                             </div>
-                            <h6>Deskripsi: <span class="deskripsi">{{ $item->deskripsi }}</span></h6>
+                            <h6>Deskripsi: <span class="deskripsi">{{ $products->deskripsi }}</span></h6>
                         </div>
                         <div class="btn-produk">
                             <button id="add-cart" class="btn btn-produk" data-toggle="modal"

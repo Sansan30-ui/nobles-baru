@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'no_hp',
+        'alamat',
         'role',
     ];
 
@@ -45,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        // 'gambar' => 'array',
     ];
 
     protected function firstName(): Attribute

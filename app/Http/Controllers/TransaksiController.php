@@ -20,6 +20,24 @@ class TransaksiController extends Controller
 
     public function payment(Request $request)
     {
+        // dd($request);
+        for ($i = 0; $i <= count($request->barang_id) - 1; $i++) {
+            $data = $request->barang_id[$i];
+        }
+
+        $products = DB::table('tb_barang')->get();
+        $keranjang = Keranjang::with('barang')->where('user_id', Auth::user()->id)->get();
+        foreach ($keranjang as $key => $p) {
+            # code...
+            $hargaItem[] = $p->barang->harga * $p->jumlah;
+        }
+
+        $total = 0;
+        foreach ($hargaItem as $value) {
+            // Artinya adalah : $value = $value+$item->barang->harga;
+            $total = $total + $value;
+        }
+
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = 'SB-Mid-server-5i8i4_LfjFg0-TAnjSnHusa_';
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
@@ -32,25 +50,25 @@ class TransaksiController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => 10000,
+                'gross_amount' => $total,
             ),
+            // 'item_details' => array(
+            //     [
+            //         'id' => 'A1',
+            //         'price' => '50000',
+            //         'quantity' => $keranjang->jumlah,
+            //         'name' => 'baju,'
+            //     ],
+            // ),
             'customer_details' => array(
-                'first_name' => 'budi',
-                'last_name' => 'pratama',
-                'email' => 'budi.pra@example.com',
-                'phone' => '08111222333',
+                'first_name' => Auth::user()->name,
+                'last_name' => '',
+                "email" => Auth::user()->email,
+                'phone' => '098123',
             ),
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-
-        // dd($request);
-        for ($i = 0; $i <= count($request->barang_id) - 1; $i++) {
-            $data = $request->barang_id[$i];
-        }
-
-        $products = DB::table('tb_barang')->get();
-        $keranjang = Keranjang::with('barang')->where('user_id', Auth::user()->id)->get();
 
         return view('pages.transaction.payment', ['products' => $products, 'keranjang' => $keranjang, 'snap_token' => $snapToken]);
     }
@@ -102,9 +120,4 @@ class TransaksiController extends Controller
 
         return redirect('/produk');
     }
-    // public function destroy($id)
-    // {
-    //     $keranjang = Keranjang::find($id);
-    //     $keranjang->delete();
-    // }
 }
