@@ -16,11 +16,6 @@ class BarangController extends Controller
     public function index()
     {
         $barangs = Barang::all();
-        // foreach ($barangs as $br => $value) {
-        //     $value->gambar = $value->gambar;
-        //     // dd($value->gambar);
-        // }
-        // dd($barangs);
 
         return view('pages.admin.barang.index', compact(
             'barangs'

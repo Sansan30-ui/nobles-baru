@@ -5,11 +5,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,8 +35,6 @@ Route::get('/produk', [ProdukController::class, 'index']);
 
 Route::get('/home/search', [HomeController::class, 'search']);
 
-
-
 Route::get('/barang', function () {
     return view('pages.admin.barang.index');
 })->name('barang');
@@ -54,9 +51,7 @@ Route::get('/transaksi', function () {
 
 Route::get('/profile', [UserController::class, 'edit'])->name('profile');
 
-Route::get('/pesanan', function () {
-    return view('pages.user.pesanan');
-})->name('pesanan');
+Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
 
 
 Route::get('/akun', [UserController::class, 'index']);
@@ -77,6 +72,8 @@ Route::post('/keranjang', [CartController::class, 'store']);
 Route::post('/checkout', [TransaksiController::class, 'store']);
 Route::get('/cart/{id}', [CartController::class, 'index']);
 Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+
+Route::post('/payment', [TransaksiController::class, 'payment_post']);
 
 
 

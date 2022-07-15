@@ -51,7 +51,7 @@ class UserController extends Controller
 
         $user = User::findOrFail(Auth::user()->id);
         $user->update($data);
-        return redirect('/profile');
+        return redirect('/profile')->with('status', 'Data Berhasil disimpan');
     }
 
     public function update_password(Request $request)

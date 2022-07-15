@@ -15,16 +15,17 @@ class Transaksi extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->integer('barang_id');
+            $table->string('kode_pembayaran');
+            $table->integer('barang_id')->nullable();
             $table->integer('user_id');
             $table->string('nama');
-            $table->integer('no_hp');
+            $table->string('no_hp');
             $table->string('email');
             $table->string('alamat');
             $table->integer('total_harga');
-            $table->string('jenis_pembayaran');
+            // $table->string('jenis_pembayaran');
             $table->string('status');
-            $table->string('transaksi_status');
+            // $table->string('transaksi_status');
 
             $table->timestamps();
         });

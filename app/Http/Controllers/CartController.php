@@ -50,6 +50,7 @@ class CartController extends Controller
                 'barang_id' => $request->id,
                 'ukuran' => $request->ukuran,
                 'jumlah' => $request->jumlah,
+                // 'kode_pembayaran' => mt_rand(100, 999),
                 'created_at' => Carbon::now()
 
             ]);

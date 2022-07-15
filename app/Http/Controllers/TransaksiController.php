@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\models\Keranjang;
+use App\models\Payment;
 use Laravel\Ui\Presets\React;
 use PhpParser\Node\Stmt\Foreach_;
 
@@ -17,6 +18,14 @@ class TransaksiController extends Controller
     private $hasilXl;
     private $hasilL;
     private $hasilM;
+
+    // public function data(Request $request)
+    // {
+    //     $data = Data::all();
+    //     return view('pages.admin.user.pesanan', compact(
+    //         'data'
+    //     ));
+    // }
 
     public function payment(Request $request)
     {
@@ -37,6 +46,9 @@ class TransaksiController extends Controller
             // Artinya adalah : $value = $value+$item->barang->harga;
             $total = $total + $value;
         }
+        $kodeUnik = mt_rand(100, 999);
+        $total = substr($total, 0, -3) . $kodeUnik;
+        // dd($total);
 
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = 'SB-Mid-server-5i8i4_LfjFg0-TAnjSnHusa_';
@@ -64,16 +76,36 @@ class TransaksiController extends Controller
                 'first_name' => Auth::user()->name,
                 'last_name' => '',
                 "email" => Auth::user()->email,
-                'phone' => '098123',
+                'phone' => Auth::user()->no_hp,
             ),
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-        return view('pages.transaction.payment', ['products' => $products, 'keranjang' => $keranjang, 'snap_token' => $snapToken]);
+        return view('pages.transaction.payment', ['products' => $products, 'keranjang' => $keranjang, 'snap_token' => $snapToken, 'kodeUnik' => $kodeUnik]);
     }
+
+    // midtrans
+    public function payment_post(Request $request)
+    {
+        $json = json_decode($request->get('json'));
+        $payment = new Payment();
+        $payment->status = $json->transaction_status;
+        $payment->nama = Auth::user()->name;
+        $payment->email = Auth::user()->email;
+        $payment->no_hp = Auth::user()->no_hp;
+        $payment->order_id = $json->order_id;
+        $payment->gross_amount = $json->gross_amount;
+        $payment->payment_type = $json->payment_type;
+        $payment->payment_code = isset($json->payment_code) ? $json->payment_code : null;
+        $payment->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
+
+        return $payment->save() ? redirect(url('/'))->with('status', 'Checkout Berhasil') : redirect(url('/'))->with('error', 'Checkout Gagal');
+    }
+
     public function store(Request $request)
     {
+        // subtr()
 
         $sumHarga = 0;
         // dd($request);
@@ -85,13 +117,9 @@ class TransaksiController extends Controller
                 'no_hp' => $request->no_hp,
                 'email' => $request->email,
                 'alamat' => $request->alamat,
-                'total_harga' => $sumHarga += $request->harga[$i],
-                // 'jumlah_barang' => $request->l + $request->xl + $request->s + $request->m,
-                // 'ukuran' => $request->ukuran[$i],
-                // 'jumlah_barang' => 0,
-                // 'ukuran' => 0,
+                'total_harga' => $request->harga[$i] * $request->jumlah[$i],
                 'status' => $request->status,
-                'jenis_pembayaran' => $request->jenis_pembayaran,
+                'kode_pembayaran' => $request->kode_pembayaran,
                 'created_at' => Carbon::now(),
             ]);
             DB::table('keranjang')->whereIn('barang_id', $request->ids)->delete();

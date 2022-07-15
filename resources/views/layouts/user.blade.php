@@ -80,6 +80,7 @@
     @yield('content')
     @include('includes.scripts_user')
     @include('includes.footer_user')
+    @stack('custom-script')
 </body>
 
 </html>

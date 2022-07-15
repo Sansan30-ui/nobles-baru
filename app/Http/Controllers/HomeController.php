@@ -36,21 +36,21 @@ class HomeController extends Controller
         return view('pages.index', ['products' => $products]);
     }
 
-    public function search(request $request)
-    {
-        //menangkap data pencarian
-        $search = $request->search;
-        //mengambil data dari table upload
-        $products = DB::table('tb_barang')
-            ->where('nama', 'like', "%" . $search . "%")
-            // ->orWhere('', 'like', "%" . $search . "%")
-            // ->orWhere('harga', 'like', "%" . $search . "%")
-            ->paginate(6);
-        foreach ($products as $br => $value) {
-            $value->gambar = unserialize($value->gambar);
-        }
+    // public function search(request $request)
+    // {
+    //     //menangkap data pencarian
+    //     $search = $request->search;
+    //     //mengambil data dari table upload
+    //     $products = DB::table('tb_barang')
+    //         ->where('nama', 'like', "%" . $search . "%")
+    //         // ->orWhere('', 'like', "%" . $search . "%")
+    //         // ->orWhere('harga', 'like', "%" . $search . "%")
+    //         ->paginate(6);
+    //     foreach ($products as $br => $value) {
+    //         $value->gambar = unserialize($value->gambar);
+    //     }
 
 
-        return view('pages.index', ['products' => $products]);
-    }
+    //     return view('pages.index', ['products' => $products]);
+    // }
 }

@@ -63,6 +63,27 @@
     <!-- Custom styles for this template -->
     <!-- <link href="../checkout/form-validation.css" rel="stylesheet"> -->
 </head>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if ($message = Session::get('status'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@elseif($message = Session::get('error'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
+
 
 
 
@@ -75,9 +96,10 @@
                 <p><strong>................</strong></p>
             </div>
 
-            <form class="needs-validation" id="submit_form" novalidate action="/checkout" method="POST"
+            <form class="needs-validation" id="submit_form" novalidate action="/payment" method="POST"
                 enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="kode_pembayaran" value="{{ $kodeUnik }}">
                 <div class="row g-5">
                     {{-- {{ dd($keranjang) }} --}}
                     <div class="col-md-5 col-lg-4 order-md-last">
@@ -103,6 +125,8 @@
 
                                         <input type="hidden" class=" fw-bold" value="{{ $p->barang->harga }}"
                                             name="harga[]">
+                                        <input type="hidden" class=" fw-bold" value="{{ $p->jumlah }}"
+                                            name="jumlah[]">
 
                                         <input type="hidden" name="json" id="json_callback">
 
@@ -119,6 +143,9 @@
                                         // Artinya adalah : $value = $value+$item->barang->harga;
                                         $total = $total + $value;
                                     }
+                                    // $total = substr()
+                                    $total = substr($total, 0, -3) . $kodeUnik;
+
                                 @endphp
                                 <h5>Rp. {{ number_format($total) }}</h5>
                             </li>
@@ -194,7 +221,7 @@
                             </div>
                         </div>
 
-                        <label class="my -6" for="jenis_pembayaran" class="form-label">Metode
+                        {{-- <label class="my -6" for="jenis_pembayaran" class="form-label">Metode
                             Pembayaran</label>
 
                         <div class="my 1">
@@ -215,7 +242,7 @@
                                 <label class="badge form-check-label bg-secondary" for="paypal">MANDIRI</label>
                             </div>
 
-                        </div>
+                        </div> --}}
 
                         <hr class="my-4">
 
@@ -241,19 +268,19 @@
             window.snap.pay('{{ $snap_token }}', {
                 onSuccess: function(result) {
                     /* You may add your own implementation here */
-                    alert("payment success!");
+                    // alert("payment success!");
                     console.log(result);
                     send_response_to_form(result);
                 },
                 onPending: function(result) {
                     /* You may add your own implementation here */
-                    alert("wating your payment!");
+                    // alert("wating your payment!");
                     console.log(result);
                     send_response_to_form(result);
                 },
                 onError: function(result) {
                     /* You may add your own implementation here */
-                    alert("payment failed!");
+                    // alert("payment failed!");
                     console.log(result);
                     send_response_to_form(result);
                 },
