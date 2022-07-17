@@ -100,6 +100,29 @@ class TransaksiController extends Controller
         $payment->payment_code = isset($json->payment_code) ? $json->payment_code : null;
         $payment->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
 
+        DB::table('keranjang')->whereIn('barang_id', $request->ids)->delete();
+
+        for ($i = 0; $i <= count($request->ukuran) - 1; $i++) {
+            $data = $request->ukuran[$i];
+
+            $barangs = Barang::where('id', $request->ids[$i])->first();
+            if (isset($data['S'])) {
+                $stokAkhir = $barangs->s - $data["S"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['s' => $stokAkhir]);
+            } elseif (isset($data['M'])) {
+                $stokAkhir = $barangs->m - $data["M"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['m' => $stokAkhir]);
+            } elseif (isset($data['L'])) {
+                $stokAkhir = $barangs->l - $data["L"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['l' => $stokAkhir]);
+            } elseif (isset($data['XL'])) {
+                $stokAkhir = $barangs->xl - $data["XL"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['xl' => $stokAkhir]);
+            } else {
+                return redirect()->back()->withErrors('Oops Ada yang salah');
+            }
+        }
+
         return $payment->save() ? redirect(url('/'))->with('status', 'Checkout Berhasil') : redirect(url('/'))->with('error', 'Checkout Gagal');
     }
 

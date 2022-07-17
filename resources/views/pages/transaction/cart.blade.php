@@ -180,7 +180,8 @@
                                                 <hr class="my-4">
 
                                                 <div class="d-flex justify-content-between mb-5">
-                                                    <h5 class="text-uppercase">Total price</h5>
+                                                    <h5 class="text-uppercase">Total Belanja</h5>
+                                                    <h5 class="text-uppercase">Kode Unik</h5>
                                                     @php
                                                         $total = 0;
                                                         foreach ($hargaItem as $value) {

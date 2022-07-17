@@ -92,8 +92,8 @@
     <div class="container">
         <main>
             <div class="py-5 text-center">
-                <h2>Checkout</h2>
-                <p><strong>................</strong></p>
+                {{-- <h2>Checkout</h2>
+                <p><strong>................</strong></p> --}}
             </div>
 
             <form class="needs-validation" id="submit_form" novalidate action="/payment" method="POST"
@@ -168,7 +168,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <label for="nama" class="form-label">Nama</label>
+                            <label for="nama" class="form-label">Nama Penerima</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                                 id="nama" placeholder="" value="safasjkgfijas" name="nama" required>
                             <div class="invalid-feedback" role="alert">
@@ -196,7 +196,7 @@
                         </div>
 
                         <div class="col-12">
-                            <label for="alamat" class="form-label">Alamat</label>
+                            <label for="alamat" class="form-label">Alamat Tujuan</label>
                             <textarea name="alamat" value="sadjkbsajfgas" class="form-control @error('alamat') is-invalid @enderror"
                                 id="alamat" cols="7" rows="5"></textarea>
                             <div class="invalid-feedback" role="alert">
@@ -248,7 +248,7 @@
 
 
                         <button class="w-100  btn-lg" type="submit">Lanjutkan
-                            Checkout</button>
+                            Pembayaran</button>
                     </div>
             </form>
 
