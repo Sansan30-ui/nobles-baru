@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\DependentDropdownController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,10 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/dashboard', function () {
     return view('pages.admin.dashboard.index');
 })->name('dashboard');
-
+Route::get('provinces', [DependentDropdownController::class, 'provinces'])->name('provinces');
+Route::get('cities', [DependentDropdownController::class, 'cities'])->name('cities');
+Route::get('districts', [DependentDropdownController::class, 'districts'])->name('districts');
+Route::get('villages', [DependentDropdownController::class, 'villages'])->name('villages');
 
 
 Route::get('/produk', [ProdukController::class, 'index']);

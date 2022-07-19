@@ -135,6 +135,15 @@
 
                             </li>
 
+                            <li class="list-group-item lh-sm mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <h6 style="font-size:15px" class="my-1">Harga Ongkir</h6>
+                                    <h6 style="font-size:15px" class="my-1">
+                                        Rp. {{ number_format($hargaOngkir->ongkir) }}
+                                    </h6>
+                                </div>
+                            </li>
+
                             <li class="list-group-item d-flex justify-content-between">
                                 <span class="fw-bold">Total</span>
                                 @php
@@ -144,14 +153,12 @@
                                         $total = $total + $value;
                                     }
                                     // $total = substr()
-                                    $total = substr($total, 0, -3) . $kodeUnik;
+                                    // $total = $total + $hargaOngkir->ongkir
+                                    $total = substr($total + $hargaOngkir->ongkir, 0, -3) . $kodeUnik;
 
                                 @endphp
                                 <h5>Rp. {{ number_format($total) }}</h5>
                             </li>
-                            <li><button id="pay-button" type="button" target="" onclick="payFunc()"
-                                    class="w-20 btn btn-success btn-lg mt-5">Bayar Via
-                                    Midtrans</button></li>
 
                         </ul>
 
@@ -161,7 +168,7 @@
 
                         <div class="col-sm-6">
                             <input type="hidden" class="form-control @error('id') is-invalid @enderror" id="id"
-                                placeholder="" value="" name="id" required>
+                                placeholder="" value="" name="id" readonly>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
@@ -170,7 +177,7 @@
                         <div class="col-sm-12">
                             <label for="nama" class="form-label">Nama Penerima</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                id="nama" placeholder="" value="safasjkgfijas" name="nama" required>
+                                id="nama" placeholder="" value="safasjkgfijas" name="nama" readonly>
                             <div class="invalid-feedback" role="alert">
                                 Valid first name is required.
                             </div>
@@ -179,7 +186,7 @@
                         <div class="col-12">
                             <label for="no_hp" class="form-label">Nomor HP</label>
                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
-                                id="no_hp" placeholder="" value="08914124" name="no_hp" required>
+                                id="no_hp" placeholder="" value="08914124" name="no_hp" readonly>
                             <div class="invalid-feedback" role="alert">
                                 Valid Nomor is required.
                             </div>
@@ -189,7 +196,47 @@
                             <label for="email" class="form-label">Email </label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                 value="sadasd@gmail.com" id="email" placeholder="you@example.com" name="email"
-                                required>
+                                readonly>
+                            <div class="invalid-feedback" role="alert">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="provinsi" class="form-label">provinsi </label>
+                            <input type="text" class="form-control @error('text') is-invalid @enderror"
+                                value="{{ $provinsi->name }}" id="email" placeholder="you@example.com"
+                                name="provinsi_id" readonly>
+                            <div class="invalid-feedback" role="alert">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="kabupaten" class="form-label">Kabupaten </label>
+                            <input type="text" class="form-control @error('text') is-invalid @enderror"
+                                value="{{ $kabupaten->name }}" id="email" placeholder="you@example.com"
+                                name="provinsi_id" readonly>
+                            <div class="invalid-feedback" role="alert">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="kecamatan" class="form-label">Kecamatan </label>
+                            <input type="text" class="form-control @error('text') is-invalid @enderror"
+                                value="{{ $kecamatan->name }}" id="email" placeholder="you@example.com"
+                                name="provinsi_id" readonly>
+                            <div class="invalid-feedback" role="alert">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="desa" class="form-label">Desa </label>
+                            <input type="text" class="form-control @error('text') is-invalid @enderror"
+                                value="{{ $desa->name }}" id="email" placeholder="you@example.com"
+                                name="provinsi_id" readonly>
                             <div class="invalid-feedback" role="alert">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -198,7 +245,7 @@
                         <div class="col-12">
                             <label for="alamat" class="form-label">Alamat Tujuan</label>
                             <textarea name="alamat" value="sadjkbsajfgas" class="form-control @error('alamat') is-invalid @enderror"
-                                id="alamat" cols="7" rows="5"></textarea>
+                                id="alamat" cols="7" rows="5" readonly>{{ Auth::user()->alamat }}</textarea>
                             <div class="invalid-feedback" role="alert">
                                 Please enter your shipping address.
                             </div>
@@ -244,11 +291,13 @@
 
                         </div> --}}
 
-                        <hr class="my-4">
+                        <hr class="mb-3">
 
-
-                        <button class="w-100  btn-lg" type="submit">Lanjutkan
-                            Pembayaran</button>
+                        <button id="pay-button" type="button" target="" onclick="payFunc()"
+                            class="w-100 btn btn-success btn-lg mb-5">Bayar Via
+                            Midtrans</button>
+                        {{-- <button class="w-100  btn-lg" type="submit">Lanjutkan
+                            Pembayaran</button> --}}
                     </div>
             </form>
 

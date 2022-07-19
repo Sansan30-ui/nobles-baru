@@ -43,6 +43,10 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id,
                 'no_hp' => 'required|string|max:255',
+                'provinsi_id' => 'required|string|max:255',
+                'kabupaten_id' => 'required|string|max:255',
+                'kecamatan_id' => 'required|string|max:255',
+                'desa_id' => 'required|string|max:255',
                 'alamat' => 'required|string|max:255',
             ]);
         }

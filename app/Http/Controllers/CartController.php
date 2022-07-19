@@ -42,8 +42,9 @@ class CartController extends Controller
     }
     public function store(Request $request)
     {
-        $productCart = Keranjang::where('barang_id', $request->id)->first();
+        $productCart = Keranjang::where('barang_id', $request->id)->where('ukuran', $request->ukuran)->first();
         // dd(empty($productCart));
+        $data = $request->all();
         if (empty($productCart)) {
             DB::table('keranjang')->insert([
                 'user_id' => Auth::user()->id,
@@ -57,7 +58,8 @@ class CartController extends Controller
             alert()->success('Barang berhasil dimasukan kedalam keranjang', 'Sukses');
             return redirect()->back();
         } else {
-            Keranjang::findOrFail($request->id)->update();
+            $data['jumlah'] = $productCart->jumlah + $data['jumlah'];
+            $productCart->update($data);
             alert()->success('Barang berhasil dimasukan kedalam keranjang', 'Sukses');
             return redirect()->back();
         }

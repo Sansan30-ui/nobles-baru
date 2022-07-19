@@ -24,6 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'no_hp',
+        'provinsi_id',
+        'kabupaten_id',
+        'kecamatan_id',
+        'desa_id',
         'alamat',
         'role',
     ];

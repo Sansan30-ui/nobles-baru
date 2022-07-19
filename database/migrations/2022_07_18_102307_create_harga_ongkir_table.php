@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnRoleToUsersTable extends Migration
+class CreateHargaOngkirTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddColumnRoleToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->after('remember_token');
+        Schema::create('harga_ongkir', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('provinces_id');
+            $table->integer('ongkir');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddColumnRoleToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('harga_ongkir');
     }
 }
