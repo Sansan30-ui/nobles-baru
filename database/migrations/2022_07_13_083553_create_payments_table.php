@@ -19,7 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->string('nama');
             $table->string('email');
             $table->string('no_hp');
-            $table->string('transaction_id');
+            // $table->string('transaction_id');
             $table->string('order_id');
             $table->string('gross_amount');
             $table->string('payment_type');

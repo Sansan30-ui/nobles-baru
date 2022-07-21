@@ -293,11 +293,11 @@
 
                         <hr class="mb-3">
 
-                        <button id="pay-button" type="button" target="" onclick="payFunc()"
+                        <button id="pay-button" type="submit" target=""
                             class="w-100 btn btn-success btn-lg mb-5">Bayar Via
                             Midtrans</button>
-                        {{-- <button class="w-100  btn-lg" type="submit">Lanjutkan
-                            Pembayaran</button> --}}
+                        <button class="w-100  btn-lg" type="submit">Lanjutkan
+                            Pembayaran</button>
                     </div>
             </form>
 
@@ -342,7 +342,11 @@
 
         function send_response_to_form(result) {
             document.getElementById('json_callback').value = JSON.stringify(result);
-            $('#submit_form').submit();
+            console.log(result);
+            $('#submit_form').submit(function(e) {
+                return false;
+            });
+
         }
     </script>
     <!-- <script src="js/checkout/form-validation.js"></script> -->

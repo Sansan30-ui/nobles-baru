@@ -42,6 +42,7 @@ class CartController extends Controller
     }
     public function store(Request $request)
     {
+
         $productCart = Keranjang::where('barang_id', $request->id)->where('ukuran', $request->ukuran)->first();
         // dd(empty($productCart));
         $data = $request->all();

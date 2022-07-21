@@ -56,24 +56,12 @@
                         <label for="gambar">Gambar</label>
                         <div class="input-group hdtuto control-group lst increment mb-2">
                             <input type="file" name="gambar[]" class="myfrm form-control">
-                            <div class="input-group-btn">
-                                <button class="btn btn-success" type="button"><i
-                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-                            </div>
                         </div>
                         <div class="input-group hdtuto control-group lst increment mb-2">
                             <input type="file" name="gambar[]" class="myfrm form-control">
-                            <div class="input-group-btn">
-                                <button class="btn btn-success" type="button"><i
-                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-                            </div>
                         </div>
                         <div class="input-group hdtuto control-group lst increment mb-2">
                             <input type="file" name="gambar[]" class="myfrm form-control">
-                            <div class="input-group-btn">
-                                <button class="btn btn-success" type="button"><i
-                                        class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-                            </div>
                         </div>
                         @error('gambar')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>

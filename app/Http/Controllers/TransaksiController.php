@@ -20,14 +20,6 @@ class TransaksiController extends Controller
     private $hasilL;
     private $hasilM;
 
-    // public function data(Request $request)
-    // {
-    //     $data = Data::all();
-    //     return view('pages.admin.user.pesanan', compact(
-    //         'data'
-    //     ));
-    // }
-
     public function payment(Request $request)
     {
         $provinsi = \Indonesia::findProvince(Auth::user()->provinsi_id, $with = null);
@@ -69,14 +61,14 @@ class TransaksiController extends Controller
                 'order_id' => rand(),
                 'gross_amount' => $total,
             ),
-            // 'item_details' => array(
-            //     [
-            //         'id' => 'A1',
-            //         'price' => '50000',
-            //         'quantity' => $keranjang->jumlah,
-            //         'name' => 'baju,'
-            //     ],
-            // ),
+            'item_details' => array(
+                [
+                    'id' => 'A1',
+                    'price' => '50000',
+                    'quantity' => $keranjang->jumlah,
+                    'name' => 'baju,'
+                ],
+            ),
             'customer_details' => array(
                 'first_name' => Auth::user()->name,
                 'last_name' => '',
@@ -93,7 +85,9 @@ class TransaksiController extends Controller
     // midtrans
     public function payment_post(Request $request)
     {
+
         $json = json_decode($request->get('json'));
+        // dd($request);
         $payment = new Payment();
         $payment->status = $json->transaction_status;
         $payment->nama = Auth::user()->name;
@@ -104,6 +98,21 @@ class TransaksiController extends Controller
         $payment->payment_type = $json->payment_type;
         $payment->payment_code = isset($json->payment_code) ? $json->payment_code : null;
         $payment->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
+
+        for ($i = 0; $i <= count($request->ids) - 1; $i++) {
+            DB::table('transaksi')->insert([
+                'user_id' => Auth::user()->id,
+                'barang_id' => $request->ids[$i],
+                'nama' => $request->nama,
+                'no_hp' => $request->no_hp,
+                'email' => $request->email,
+                'alamat' => $request->alamat,
+                'total_harga' => $request->harga[$i] * $request->jumlah[$i],
+                'status' => $request->status,
+                'kode_pembayaran' => $request->kode_pembayaran,
+                'created_at' => Carbon::now(),
+            ]);
+        }
 
         DB::table('keranjang')->whereIn('barang_id', $request->ids)->delete();
 
@@ -135,45 +144,31 @@ class TransaksiController extends Controller
     {
         // subtr()
 
-        // $sumHarga = 0;
-        // // dd($request);
-        // for ($i = 0; $i <= count($request->ids) - 1; $i++) {
-        //     DB::table('transaksi')->insert([
-        //         'user_id' => Auth::user()->id,
-        //         'barang_id' => $request->ids[$i],
-        //         'nama' => $request->nama,
-        //         'no_hp' => $request->no_hp,
-        //         'email' => $request->email,
-        //         'alamat' => $request->alamat,
-        //         'total_harga' => $request->harga[$i] * $request->jumlah[$i],
-        //         'status' => $request->status,
-        //         'kode_pembayaran' => $request->kode_pembayaran,
-        //         'created_at' => Carbon::now(),
-        //     ]);
-        //     DB::table('keranjang')->whereIn('barang_id', $request->ids)->delete();
-        // }
-        // // dd($request->ukuran);
-        // for ($i = 0; $i <= count($request->ukuran) - 1; $i++) {
-        //     $data = $request->ukuran[$i];
+        $sumHarga = 0;
+        // dd($request);
 
-        //     $barangs = Barang::where('id', $request->ids[$i])->first();
-        //     if (isset($data['S'])) {
-        //         $stokAkhir = $barangs->s - $data["S"];
-        //         DB::table('tb_barang')->where('id', $request->ids[$i])->update(['s' => $stokAkhir]);
-        //     } elseif (isset($data['M'])) {
-        //         $stokAkhir = $barangs->m - $data["M"];
-        //         DB::table('tb_barang')->where('id', $request->ids[$i])->update(['m' => $stokAkhir]);
-        //     } elseif (isset($data['L'])) {
-        //         $stokAkhir = $barangs->l - $data["L"];
-        //         DB::table('tb_barang')->where('id', $request->ids[$i])->update(['l' => $stokAkhir]);
-        //     } elseif (isset($data['XL'])) {
-        //         $stokAkhir = $barangs->xl - $data["XL"];
-        //         DB::table('tb_barang')->where('id', $request->ids[$i])->update(['xl' => $stokAkhir]);
-        //     } else {
-        //         return redirect()->back()->withErrors('Oops Ada yang salah');
-        //     }
-        // }
+        // dd($request->ukuran);
+        for ($i = 0; $i <= count($request->ukuran) - 1; $i++) {
+            $data = $request->ukuran[$i];
 
-        // return redirect('/produk');
+            $barangs = Barang::where('id', $request->ids[$i])->first();
+            if (isset($data['S'])) {
+                $stokAkhir = $barangs->s - $data["S"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['s' => $stokAkhir]);
+            } elseif (isset($data['M'])) {
+                $stokAkhir = $barangs->m - $data["M"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['m' => $stokAkhir]);
+            } elseif (isset($data['L'])) {
+                $stokAkhir = $barangs->l - $data["L"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['l' => $stokAkhir]);
+            } elseif (isset($data['XL'])) {
+                $stokAkhir = $barangs->xl - $data["XL"];
+                DB::table('tb_barang')->where('id', $request->ids[$i])->update(['xl' => $stokAkhir]);
+            } else {
+                return redirect()->back()->withErrors('Oops Ada yang salah');
+            }
+        }
+
+        return redirect('/produk');
     }
 }
