@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\DependentDropdownController;
+use App\Http\Controllers\DetailTransaksiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,10 +49,18 @@ Route::get('/tambah', function () {
 })->name('tambah');
 
 
-Route::get('/transaksi', function () {
-    return view('pages.admin.transaksi.transaksi');
-})->name('transaksi');
+// Route::get('/transaksi', function () {
+//     return view('pages.admin.transaksi.transaksi');
+// })->name('transaksi');
 
+Route::get('/transaksi', [TransaksiController::class, 'transaksi']);
+Route::post('/status/{id}', [TransaksiController::class, 'status']);
+
+Route::get('/detailtransaksi', function () {
+    return view('pages.transaction.detailtransaksi');
+})->name('detailtransaksi');
+
+Route::get('/detail/transaksi/{id}', [DetailTransaksiController::class, 'detail']);
 
 Route::get('/profile', [UserController::class, 'edit'])->name('profile');
 
@@ -77,7 +86,7 @@ Route::post('/checkout', [TransaksiController::class, 'store']);
 Route::get('/cart/{id}', [CartController::class, 'index']);
 Route::delete('/cart/{id}', [CartController::class, 'destroy']);
 
-Route::post('/payment', [TransaksiController::class, 'payment_post']);
+Route::post('/payment', [DetailTransaksiController::class, 'payment_post']);
 
 
 

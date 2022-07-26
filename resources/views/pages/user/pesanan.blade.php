@@ -7,19 +7,31 @@
                 <th>Kode Pembayaran</th>
                 <th>Total Harga</th>
                 <th>Status</th>
+                <th>Detail Transaksi</th>
                 <th>Resi Pengiriman</th>
             </tr>
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $item->kode_pembayaran }}</td>
-                    <td> {{ $item->total }}
+
+                    <td> {{ $item->total }}</td>
+
+                    <td>
+                        @if ($item->status == 'belum dibayar')
+                            <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
+                                class="w-20 btn btn-success btn-lg mt-5">Lanjutkan
+                                Pembayaran</a>
+                        @elseif ($item->status == 'sudah dibayar')
+                            <label for="">Pesanan Diproses</label>
+                        @elseif ($item->status == 'pesanan dikirim')
+                            <label for="">Pesanan Sedang Dikirim</label>
+                        @endif
+
                     </td>
                     <td>
-                        <form action="">
-                            <button id="pay-button" type="button" target="" onclick="payFunc()"
-                                class="w-20 btn btn-success btn-lg mt-5">Bayar Via
-                                Midtrans</button>
-                        </form>
+                        <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
+                            class="w-20 btn btn-success btn-lg mt-5">Lanjutkan
+                            Pembayaran</a>
                     </td>
                 </tr>
             @endforeach

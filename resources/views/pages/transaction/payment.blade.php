@@ -18,8 +18,7 @@
     <link href="/css/checkout/bootstrap.min.css" rel="stylesheet">
     <link href="img/shop/image.png" rel='shortcut icon'>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 
     <style>
         .bd-placeholder-img {
@@ -96,7 +95,7 @@
                 <p><strong>................</strong></p> --}}
             </div>
 
-            <form class="needs-validation" id="submit_form" novalidate action="/payment" method="POST"
+            <form class="needs-validation" id="submit_form" novalidate action="/checkout" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="kode_pembayaran" value="{{ $kodeUnik }}">
@@ -177,7 +176,8 @@
                         <div class="col-sm-12">
                             <label for="nama" class="form-label">Nama Penerima</label>
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                id="nama" placeholder="" value="safasjkgfijas" name="nama" readonly>
+                                id="nama" placeholder="" value="{{ Auth::user()->name }}" name="nama"
+                                readonly>
                             <div class="invalid-feedback" role="alert">
                                 Valid first name is required.
                             </div>
@@ -186,7 +186,8 @@
                         <div class="col-12">
                             <label for="no_hp" class="form-label">Nomor HP</label>
                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
-                                id="no_hp" placeholder="" value="08914124" name="no_hp" readonly>
+                                id="no_hp" placeholder="" value="{{ Auth::user()->no_hp }}" name="no_hp"
+                                readonly>
                             <div class="invalid-feedback" role="alert">
                                 Valid Nomor is required.
                             </div>
@@ -195,8 +196,8 @@
                         <div class="col-12">
                             <label for="email" class="form-label">Email </label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="sadasd@gmail.com" id="email" placeholder="you@example.com" name="email"
-                                readonly>
+                                value="{{ Auth::user()->email }}" id="email" placeholder="you@example.com"
+                                name="email" readonly>
                             <div class="invalid-feedback" role="alert">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -243,7 +244,7 @@
                         </div>
 
                         <div class="col-12">
-                            <label for="alamat" class="form-label">Alamat Tujuan</label>
+                            <label for="alamat" class="form-label">Alamat Lengkap</label>
                             <textarea name="alamat" value="sadjkbsajfgas" class="form-control @error('alamat') is-invalid @enderror"
                                 id="alamat" cols="7" rows="5" readonly>{{ Auth::user()->alamat }}</textarea>
                             <div class="invalid-feedback" role="alert">
@@ -268,34 +269,11 @@
                             </div>
                         </div>
 
-                        {{-- <label class="my -6" for="jenis_pembayaran" class="form-label">Metode
-                            Pembayaran</label>
-
-                        <div class="my 1">
-                            <div class="form-check">
-                                <input id="credit" name="jenis_pembayaran" type="radio" value="BRI"
-                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" checked
-                                    required>
-                                <label class="badge form-check-label bg-secondary" for="credit">BRI</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="jenis_pembayaran" type="radio" value="BCA"
-                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" required>
-                                <label class="badge form-check-label bg-secondary" for="debit">BCA</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="jenis_pembayaran" type="radio" value="MANDIRI"
-                                    class="form-check-input @error('jenis_pembayaran') is-invalid @enderror" required>
-                                <label class="badge form-check-label bg-secondary" for="paypal">MANDIRI</label>
-                            </div>
-
-                        </div> --}}
-
                         <hr class="mb-3">
 
-                        <button id="pay-button" type="submit" target=""
+                        {{-- <button id="pay-button" type="button" target="" onclick="payFunc()"
                             class="w-100 btn btn-success btn-lg mb-5">Bayar Via
-                            Midtrans</button>
+                            Midtrans</button> --}}
                         <button class="w-100  btn-lg" type="submit">Lanjutkan
                             Pembayaran</button>
                     </div>
@@ -307,48 +285,6 @@
     </div>
     </main>
 
-
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-yukSvCI9H4QLH8Hq"></script>
-
-
-    <script type="text/javascript">
-        function payFunc() {
-            window.snap.pay('{{ $snap_token }}', {
-                onSuccess: function(result) {
-                    /* You may add your own implementation here */
-                    // alert("payment success!");
-                    console.log(result);
-                    send_response_to_form(result);
-                },
-                onPending: function(result) {
-                    /* You may add your own implementation here */
-                    // alert("wating your payment!");
-                    console.log(result);
-                    send_response_to_form(result);
-                },
-                onError: function(result) {
-                    /* You may add your own implementation here */
-                    // alert("payment failed!");
-                    console.log(result);
-                    send_response_to_form(result);
-                },
-                onClose: function() {
-                    /* You may add your own implementation here */
-                    alert('you closed the popup without finishing the payment');
-                }
-            })
-        }
-
-        function send_response_to_form(result) {
-            document.getElementById('json_callback').value = JSON.stringify(result);
-            console.log(result);
-            $('#submit_form').submit(function(e) {
-                return false;
-            });
-
-        }
-    </script>
     <!-- <script src="js/checkout/form-validation.js"></script> -->
 </body>
 
