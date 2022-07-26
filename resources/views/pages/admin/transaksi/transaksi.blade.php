@@ -9,8 +9,8 @@
             <th>Nama Pembeli</th>
             {{-- <th>Provinsi</th>
             <th>Kabupaten</th>
-            <th>Kecamatan</th>
-            <th>Desa</th> --}}
+            {{-- <th>Kecamatan</th> --}}
+            <th>Desa</th>
             <th>Alamat Lengkap</th>
             <th>Total Harga</th>
             <th>Kode Pembayaran</th>
