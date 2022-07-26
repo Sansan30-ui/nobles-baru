@@ -18,20 +18,29 @@
 
                     <td>
                         @if ($item->status == 'belum dibayar')
-                            <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
+                            {{-- <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
                                 class="w-20 btn btn-success btn-lg mt-5">Lanjutkan
-                                Pembayaran</a>
+                                Pembayaran</a> --}}
+                            <button class="btn btn-danger">{{ $item->status }}</button>
+                            {{-- <label for="">Pesanan Belum Dibayar</label> --}}
                         @elseif ($item->status == 'sudah dibayar')
-                            <label for="">Pesanan Diproses</label>
+                            <button class="btn btn-success">{{ $item->status }}</button>
+                            {{-- <label for="">Pesanan Diproses</label> --}}
                         @elseif ($item->status == 'pesanan dikirim')
-                            <label for="">Pesanan Sedang Dikirim</label>
+                            <button class="btn btn-primary">{{ $item->status }}</button>
+                            {{-- <label for="">Pesanan Sedang Dikirim</label> --}}
                         @endif
 
                     </td>
                     <td>
-                        <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
-                            class="w-20 btn btn-success btn-lg mt-5">Lanjutkan
-                            Pembayaran</a>
+                        @if ($item->status == 'belum dibayar')
+                            <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
+                                class="w-20 btn btn-success btn-lg mt-5">Lanjutkan
+                                Pembayaran</a>
+                        @else
+                            <a href="/detail/transaksi/{{ $item->kode_pembayaran }}"
+                                class="w-20 btn btn-secondary btn-lg mt-5">Detail Pesanan</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
